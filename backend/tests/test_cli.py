@@ -1,5 +1,7 @@
 """命令行（M1.14）：stats、show、reprocess、llm-backfill --dry-run、export-gold --dry-run、report-gold（只跑调试集）。"""
 
+import os
+
 import pytest
 
 import main
@@ -80,3 +82,25 @@ def test_export_gold_dry_run_lists_new_candidates(monkeypatch, capsys, db_path):
 def test_report_gold_dev_split(monkeypatch, capsys, db_path):
     code, out = run(monkeypatch, capsys, db_path, "report-gold", "--split", "dev", "--mode", "rules")
     assert code == 0 and "规则模式" in out and "holdout" not in out
+
+
+@pytest.mark.skipif(os.geteuid() == 0, reason="root 什么目录都能写")
+def test_unwritable_data_dir_fails_with_a_clear_message(monkeypatch, capsys, tmp_path):
+    data = tmp_path / "data"
+    data.mkdir()
+    data.chmod(0o555)
+    settings = load_settings({"DB_PATH": str(data / "radar.db")}, env_file=None)
+    monkeypatch.setattr(main, "load_settings", lambda: settings)
+    monkeypatch.delenv("RUN_AS_USER", raising=False)
+    try:
+        assert main.main(["stats"]) == 2
+    finally:
+        data.chmod(0o755)
+    assert f"数据目录错误：数据目录 {data} 当前用户" in capsys.readouterr().err
+
+
+def test_config_command_does_not_touch_the_data_dir(monkeypatch, capsys, tmp_path):
+    settings = load_settings({"DB_PATH": str(tmp_path / "nope" / "radar.db")}, env_file=None)
+    monkeypatch.setattr(main, "load_settings", lambda: settings)
+    assert main.main(["config"]) == 0
+    assert not (tmp_path / "nope").exists()

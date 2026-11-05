@@ -13,7 +13,7 @@ import time
 from datetime import timedelta
 
 from app.config import ROOT, ConfigError, Settings, load_settings
-from app.db import Database
+from app.db import DataDirError, Database, prepare_data_dir
 from app.i18n import translator
 
 TOKENS_PER_POST = 7900  # 附录 A 实测：约 7.9k token/条
@@ -431,6 +431,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"配置错误：{e}", file=sys.stderr)
         return 2
     setup_logging(settings.log_level)
+    if args.command != "config":  # 配置已读完（含 .env），之后可以降权；config 只显示配置，不碰数据目录
+        try:
+            prepare_data_dir(settings.db_path)
+        except DataDirError as e:
+            print(f"数据目录错误：{e}", file=sys.stderr)
+            return 2
     if args.command is None:  # 不带命令即 serve（第 10.3 节）
         return cmd_serve(settings, args)
     return args.func(settings, args)

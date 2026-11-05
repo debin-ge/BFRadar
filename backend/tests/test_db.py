@@ -1,11 +1,13 @@
 import json
+import os
 import shutil
 import sqlite3
 import threading
 
 import pytest
 
-from app.db import MIGRATIONS, Database, connect, migrate, migration_files, schema_version, transaction
+from app.db import (MIGRATIONS, Database, DataDirError, connect, migrate, migration_files, prepare_data_dir,
+                    schema_version, transaction)
 
 
 def test_migrate_creates_schema_and_is_idempotent(tmp_path):
@@ -170,3 +172,114 @@ def test_005_drops_stock_and_out_of_scope_products(tmp_path):
     deal_cols = {r[1] for r in conn.execute("PRAGMA table_info(deals)")}
     plan_cols = {r[1] for r in conn.execute("PRAGMA table_info(plans)")}
     assert not any("stock" in c for c in deal_cols | plan_cols)
+
+
+# ---------------------------------------------------------------- 数据目录（prepare_data_dir）
+
+
+def test_prepare_data_dir_creates_missing_directory(tmp_path, monkeypatch):
+    monkeypatch.delenv("RUN_AS_USER", raising=False)
+    prepare_data_dir(tmp_path / "a" / "b" / "radar.db")
+    assert (tmp_path / "a" / "b").is_dir()
+    prepare_data_dir(":memory:")  # 内存库没有目录
+
+
+@pytest.mark.skipif(os.geteuid() == 0, reason="root 什么目录都能写")
+def test_prepare_data_dir_explains_unwritable_directory(tmp_path, monkeypatch):
+    """目录不可写时说清楚是哪个目录、谁的权限，而不是等 SQLite 报 unable to open database file。"""
+    monkeypatch.delenv("RUN_AS_USER", raising=False)
+    data = tmp_path / "data"
+    data.mkdir()
+    data.chmod(0o555)
+    try:
+        with pytest.raises(DataDirError, match=f"{data}.*不可写"):
+            prepare_data_dir(data / "radar.db")
+    finally:
+        data.chmod(0o755)
+
+
+class FakeRoot:
+    """把当前进程装成 root：记录 chown 与降权调用，不真的执行。"""
+
+    def __init__(self, monkeypatch, *, can_regain_root=False):
+        self.calls: list[tuple] = []
+        self.regain = can_regain_root
+        monkeypatch.setattr(os, "geteuid", lambda: 0)
+        monkeypatch.setattr(os, "lchown", lambda path, uid, gid: self.calls.append(("chown", os.path.basename(path), uid, gid)))
+        monkeypatch.setattr(os, "setgroups", lambda groups: self.calls.append(("setgroups", tuple(groups))))
+        monkeypatch.setattr(os, "setgid", lambda gid: self.calls.append(("setgid", gid)))
+        monkeypatch.setattr(os, "setuid", self.setuid)
+
+    def setuid(self, uid):
+        if uid == 0 and not self.regain:
+            raise PermissionError
+        self.calls.append(("setuid", uid))
+
+
+def test_root_hands_data_directory_to_run_as_user_then_drops_privileges(tmp_path, monkeypatch):
+    import pwd
+    from collections import namedtuple
+
+    Entry = namedtuple("Entry", "pw_uid pw_gid pw_dir")
+    monkeypatch.setattr(pwd, "getpwnam", lambda name: Entry(10001, 10002, "/app") if name == "bfradar" else (_ for _ in ()).throw(KeyError(name)))
+    data = tmp_path / "data"
+    (data / "backups").mkdir(parents=True)
+    (data / "radar.db").write_text("x")
+    (data / "backups" / "radar-1.db").write_text("x")
+    monkeypatch.setenv("RUN_AS_USER", "bfradar")
+    fake = FakeRoot(monkeypatch)
+    prepare_data_dir(data / "radar.db")
+    chowned = {c[1] for c in fake.calls if c[0] == "chown"}
+    assert chowned == {"data", "backups", "radar.db", "radar-1.db"}  # 目录本身、子目录、已有文件都交出去
+    assert all(c[2:] == (10001, 10002) for c in fake.calls if c[0] == "chown")
+    steps = [c[0] for c in fake.calls]
+    assert steps.index("setgid") < steps.index("setuid") and steps.index("setgroups") < steps.index("setgid")
+    assert [c for c in fake.calls if c[0] in ("setgid", "setuid")] == [("setgid", 10002), ("setuid", 10001)]
+    assert steps.index("setuid") > max(i for i, s in enumerate(steps) if s == "chown")  # 先交出去，再降权
+
+
+def test_privilege_drop_that_can_regain_root_is_an_error(tmp_path, monkeypatch):
+    import pwd
+    from collections import namedtuple
+
+    monkeypatch.setattr(pwd, "getpwnam", lambda name: namedtuple("E", "pw_uid pw_gid pw_dir")(10001, 10001, "/app"))
+    monkeypatch.setenv("RUN_AS_USER", "bfradar")
+    FakeRoot(monkeypatch, can_regain_root=True)
+    with pytest.raises(DataDirError, match="降权失败"):
+        prepare_data_dir(tmp_path / "radar.db")
+
+
+def test_unknown_run_as_user_is_an_error(tmp_path, monkeypatch):
+    monkeypatch.setenv("RUN_AS_USER", "no-such-user-bfradar")
+    FakeRoot(monkeypatch)
+    with pytest.raises(DataDirError, match="no-such-user-bfradar"):
+        prepare_data_dir(tmp_path / "radar.db")
+
+
+def test_run_as_user_is_ignored_for_non_root(tmp_path, monkeypatch):
+    """非 root 进程（本机开发）即使环境里有 RUN_AS_USER 也不动属主、不降权。"""
+    monkeypatch.setenv("RUN_AS_USER", "bfradar")
+    monkeypatch.setattr(os, "geteuid", lambda: 1000)
+    called = []
+    monkeypatch.setattr(os, "lchown", lambda *a: called.append(a))
+    monkeypatch.setattr(os, "setuid", lambda *a: called.append(a))
+    prepare_data_dir(tmp_path / "radar.db")
+    assert called == []
+
+
+def test_chown_failure_still_drops_privileges_and_the_writability_check_decides(tmp_path, monkeypatch, caplog):
+    import pwd
+    from collections import namedtuple
+
+    monkeypatch.setattr(pwd, "getpwnam", lambda name: namedtuple("E", "pw_uid pw_gid pw_dir")(10001, 10001, "/app"))
+    monkeypatch.setenv("RUN_AS_USER", "bfradar")
+    fake = FakeRoot(monkeypatch)
+
+    def refuse(path, uid, gid):
+        raise OSError(30, "Read-only file system")
+
+    monkeypatch.setattr(os, "lchown", refuse)
+    with caplog.at_level("WARNING", logger="bfradar"):
+        prepare_data_dir(tmp_path / "radar.db")  # 目录对（这里是测试进程自己的）仍可写：不报错
+    assert ("setuid", 10001) in fake.calls
+    assert "无法把数据目录" in caplog.text and "Read-only file system" in caplog.text

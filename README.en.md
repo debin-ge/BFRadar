@@ -60,6 +60,7 @@ docker compose up -d --build           # then open http://127.0.0.1:3000/
 ```
 
 - The database and backups live in `backend/data/` and survive stops and rebuilds. A backend started for local development reads the same directory, so don't run both at once.
+- Set `SITE_URL` in `backend/.env` to the address you open the site at (`http://127.0.0.1:3000` locally); the sitemap, RSS and share images use it for absolute URLs.
 - Different port: `WEB_PORT=8080 docker compose up -d`.
 - To crawl through a local proxy, set `HTTPS_PROXY=http://host.docker.internal:<proxy port>` in `backend/.env`.
 - `docker compose logs -f app` shows the logs, `docker compose down` stops everything.

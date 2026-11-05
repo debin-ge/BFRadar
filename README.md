@@ -63,6 +63,7 @@ docker compose up -d --build           # 打开 http://127.0.0.1:3000/
 ```
 
 - 数据库和备份在 `backend/data/`，停止、重建都不会丢。本机开发时的后端也读这个目录，两边不要同时运行。
+- `backend/.env` 里的 `SITE_URL` 填你访问用的地址（本机是 `http://127.0.0.1:3000`），sitemap、RSS 和分享图里的绝对地址用它。
 - 换端口：`WEB_PORT=8080 docker compose up -d`。
 - 采集要走本机代理：在 `backend/.env` 里写 `HTTPS_PROXY=http://host.docker.internal:<代理端口>`。
 - 常用命令：`docker compose logs -f app` 看日志，`docker compose down` 停止。

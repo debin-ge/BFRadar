@@ -6,6 +6,8 @@ WAL 模式，读写互不阻塞；连接不跨线程共享，采集线程与 Web
 迁移文件为 app/migrations/NNN_说明.sql，按版本号顺序执行，当前版本记在 PRAGMA user_version。
 """
 
+import logging
+import os
 import re
 import sqlite3
 import threading
@@ -34,6 +36,59 @@ def _write_lock(path: Path | str) -> threading.RLock:
     key = str(Path(path).resolve())
     with _write_locks_guard:
         return _write_locks.setdefault(key, threading.RLock())
+
+
+class DataDirError(RuntimeError):
+    """数据库所在目录不可用。"""
+
+
+def prepare_data_dir(path: Path | str) -> None:
+    """建好数据库所在目录，并保证本进程能写它；任何连接打开之前调用（main.py 启动时）。
+
+    容器里挂进来的数据目录由宿主机或 Docker 创建，Linux 上常是 root 所有，非 root 的进程写不进去，SQLite 只报一句
+    "unable to open database file"。镜像以 root 启动并设置了 RUN_AS_USER 时，这里先把目录（含已有文件）交给该用户，
+    再把本进程降权为该用户，此后的一切（接口、调度器、命令行）都以非 root 运行。其他情况只检查可写性，
+    不行就说清楚是哪个目录、谁的权限。
+    """
+    if str(path) == ":memory:":
+        return
+    directory = Path(path).parent
+    directory.mkdir(parents=True, exist_ok=True)
+    run_as = os.environ.get("RUN_AS_USER", "")
+    if run_as and hasattr(os, "geteuid") and os.geteuid() == 0:
+        _hand_over(directory, run_as)
+    if not os.access(directory, os.W_OK | os.X_OK):
+        owner = directory.stat().st_uid
+        raise DataDirError(f"数据目录 {directory} 当前用户（uid {os.geteuid()}）不可写，目录属主是 uid {owner}："
+                           f"请把它的属主改成运行服务的用户，如 chown -R {os.geteuid()} {directory}")
+
+
+def _hand_over(directory: Path, user: str) -> None:
+    """root 进程：把 directory 交给 user，再降权为 user。"""
+    import pwd
+
+    try:
+        pw = pwd.getpwnam(user)
+    except KeyError:
+        raise DataDirError(f"RUN_AS_USER 指定的用户 {user!r} 不存在") from None
+    uid, gid = pw.pw_uid, pw.pw_gid
+    try:
+        for root, dirs, files in os.walk(directory):  # 不跟随符号链接；只改属主不对的，每次启动几乎是空操作
+            for name in (root, *(os.path.join(root, n) for n in (*dirs, *files))):
+                st = os.lstat(name)
+                if (st.st_uid, st.st_gid) != (uid, gid):
+                    os.lchown(name, uid, gid)
+    except OSError as e:  # 只读挂载、NFS 不许改属主等：目录本来就可写的话照常继续，不可写由调用方报清楚
+        logging.getLogger("bfradar").warning("无法把数据目录 %s 交给 %s：%s", directory, user, e)
+    os.setgroups([])
+    os.setgid(gid)
+    os.setuid(uid)
+    os.environ.update(HOME=pw.pw_dir, USER=user)
+    try:
+        os.setuid(0)
+    except PermissionError:
+        return
+    raise DataDirError("降权失败：进程仍能切回 root")
 
 
 def connect(path: Path | str) -> Connection:

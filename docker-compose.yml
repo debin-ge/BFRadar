@@ -9,6 +9,7 @@
 #      只绑在本机回环地址 127.0.0.1 上，局域网和外网访问不到。
 #
 # 数据库和备份在 ./backend/data，挂进容器，停止、重建都不会丢。本机开发时的后端也读这个目录，两边不要同时运行。
+# SITE_URL（sitemap、RSS、分享图里的绝对地址）写在 backend/.env 里：本机填 http://127.0.0.1:3000，对外访问填域名。
 # 采集要走本机代理时，在 backend/.env 里写 HTTPS_PROXY=http://host.docker.internal:<代理端口>。
 #
 # 应用配置（backend/.env）不用 env_file 传：compose 会把"空值 + 行尾注释"里的注释当成值（如 SITE_URL='# 生产填正式域名…'），
@@ -19,8 +20,6 @@ name: bfradar
 services:
   app:
     build: ./backend
-    environment:
-      SITE_URL: http://127.0.0.1:${WEB_PORT:-3000}  # 固定为 web 发布的地址（sitemap、RSS、分享图里的绝对地址用它），覆盖 backend/.env 里的同名项
     volumes:
       - type: bind
         source: ./backend/.env

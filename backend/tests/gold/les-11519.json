@@ -1,0 +1,156 @@
+{
+  "id": "les-11519",
+  "source": "lowendspirit",
+  "url": "https://lowendspirit.com/discussion/11519",
+  "fixture": "fixtures/lowendspirit_shared-hosting_2026-11-02.xml",
+  "fixture_item_guid": "11519@/discussions",
+  "published_at": "2026-10-27T14:41:11+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "hosting"
+    ],
+    "lang": "en",
+    "vendor": "SmokyHosts",
+    "discount": {
+      "pct": null,
+      "recurring": "recurring",
+      "text": "Order triennially and get 3 months free"
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://members.smokyhosts.com/cart.php?a=add&pid=191&billingcycle=annually",
+    "ends_at": null,
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Deal35 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 100,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 35,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=191&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；Host 1 domain；unmetered"
+      },
+      {
+        "name": "Deal35 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 100,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 90,
+        "currency": "USD",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=191&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；三年付另送 3 个月；Host 1 domain；unmetered"
+      },
+      {
+        "name": "Deal50 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 250,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 50,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=192&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；Host upto 10 domains；unmetered"
+      },
+      {
+        "name": "Deal50 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 250,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 120,
+        "currency": "USD",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=192&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；三年付另送 3 个月；Host upto 10 domains；unmetered"
+      },
+      {
+        "name": "Deal75 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 500,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 75,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=193&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；Host upto unlimited domains；unmetered"
+      },
+      {
+        "name": "Deal75 Webhosting 2026",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 500,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "USA"
+        ],
+        "price": 180,
+        "currency": "USD",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://members.smokyhosts.com/cart.php?a=add&pid=193&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；三年付另送 3 个月；Host upto unlimited domains；unmetered"
+      }
+    ],
+    "intel": null,
+    "notes": "'Summer Sale' 不在节日词表中 → sale。'Lifetime price freeze guarantee' 为价格语境的 lifetime → recurring。端口取 'All our servers feature ... 1Gbps port'。"
+  }
+}

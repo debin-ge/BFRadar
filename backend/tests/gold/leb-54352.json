@@ -1,0 +1,99 @@
+{
+  "id": "leb-54352",
+  "source": "lowendbox",
+  "url": "https://lowendbox.com/blog/cheap-vps-deals-in-toronto-from-enderhost-get-a-4gb-vps-for-only-3-84-month/",
+  "fixture": "fixtures/lowendbox_feed_2026-11-02.xml",
+  "fixture_item_guid": "https://lowendbox.com/?p=54352",
+  "published_at": "2026-11-02T12:00:00+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "EnderHost",
+    "discount": {
+      "pct": 50,
+      "recurring": "recurring",
+      "text": "50% OFF recurring"
+    },
+    "coupon_codes": [
+      "LETSPECIAL96",
+      "LETSPECIAL50"
+    ],
+    "purchase_url": "https://billing.enderhost.co/index.php?rp=/store/budget-vps-hosting/4gb-budget-vps",
+    "ends_at": null,
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "4GB Budget VPS",
+        "cpu_cores": 2,
+        "cpu_desc": "Ryzen 9 9950X",
+        "ram_gb": 4,
+        "disk_gb": 40,
+        "disk_type": "SSD",
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Toronto"
+        ],
+        "price": 3.84,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://billing.enderhost.co/index.php?rp=/store/budget-vps-hosting/4gb-budget-vps",
+        "coupon_code": "LETSPECIAL96",
+        "notes": "用码后循环价；原文写 DDR4 RAM"
+      },
+      {
+        "name": "6GB Budget VPS",
+        "cpu_cores": 2,
+        "cpu_desc": "Ryzen 9 9950X",
+        "ram_gb": 6,
+        "disk_gb": 60,
+        "disk_type": "SSD",
+        "bandwidth_tb": 3,
+        "port_gbps": 1,
+        "locations": [
+          "Toronto"
+        ],
+        "price": 5.76,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://billing.enderhost.co/index.php?rp=/store/budget-vps-hosting/6gb-budget-vps",
+        "coupon_code": "LETSPECIAL96",
+        "notes": "用码后循环价；原文写 DDR4 RAM"
+      },
+      {
+        "name": "8GB Budget VPS",
+        "cpu_cores": 3,
+        "cpu_desc": "Ryzen 9 9950X",
+        "ram_gb": 8,
+        "disk_gb": 80,
+        "disk_type": "SSD",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Toronto"
+        ],
+        "price": 7.68,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://billing.enderhost.co/index.php?rp=/store/budget-vps-hosting/8gb-budget-vps",
+        "coupon_code": "LETSPECIAL96",
+        "notes": "用码后循环价；原文写 DDR4 RAM"
+      }
+    ],
+    "intel": null,
+    "notes": "LEB 编辑转述商家的具体促销 → offer。LETSPECIAL96（多伦多 36% 循环）绑定 3 个多伦多套餐；LETSPECIAL50（其他机房 50% 循环，$1.50/GB）只有按 GB 单价、没有具体配置，不立套餐。cpu_desc 取 'bringing Ryzen 9 9950X VPS hosting down to'。"
+  }
+}

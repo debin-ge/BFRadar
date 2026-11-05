@@ -1,0 +1,65 @@
+# 本机部署：
+#   cp backend/.env.example backend/.env    # 应用配置，按需修改
+#   docker compose up -d --build            # 打开 http://127.0.0.1:3000/
+# 换端口：WEB_PORT=8080 docker compose up -d
+#
+# app  后端（backend/）：接口、RSS、sitemap、分享图、给前端的内部页面数据与调度器，Uvicorn 单 worker（D25）。
+#      不对宿主机开放端口，只有 web 能访问它。
+# web  前端（frontend/）：站点的唯一入口，后端的公开地址经它原样转给 app，/internal/* 不转发。
+#      只绑在本机回环地址 127.0.0.1 上，局域网和外网访问不到。
+#
+# 数据库和备份在 ./backend/data，挂进容器，停止、重建都不会丢。本机开发时的后端也读这个目录，两边不要同时运行。
+# 采集要走本机代理时，在 backend/.env 里写 HTTPS_PROXY=http://host.docker.internal:<代理端口>。
+#
+# 应用配置（backend/.env）不用 env_file 传：compose 会把"空值 + 行尾注释"里的注释当成值（如 SITE_URL='# 生产填正式域名…'），
+# 所以把它只读挂进容器，由应用自己的解析器读（与本机开发同一套规则）。
+
+name: bfradar
+
+services:
+  app:
+    build: ./backend
+    environment:
+      SITE_URL: http://127.0.0.1:${WEB_PORT:-3000}  # 固定为 web 发布的地址（sitemap、RSS、分享图里的绝对地址用它），覆盖 backend/.env 里的同名项
+    volumes:
+      - type: bind
+        source: ./backend/.env
+        target: /app/.env
+        read_only: true
+        bind:
+          create_host_path: false  # 缺 backend/.env 时直接报错，不在宿主机上建出一个同名空目录
+      - ./backend/data:/app/data
+    init: true
+    restart: unless-stopped
+    healthcheck:  # 不用 /healthz：数据过期时它返回 503，容器本身并没有坏
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/openapi.json', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      API_ORIGIN: http://app:8000
+      ASSETS_ARCHIVE: /app/assets-archive
+    volumes:
+      - assets:/app/assets-archive  # 累积各版本的 /assets 文件，重建后已打开的旧页面仍能加载旧分块（保留 7 天）
+    ports:
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+    init: true
+    restart: unless-stopped
+    healthcheck:  # 容器内监听 3000（镜像里 PORT=3000），与上面发布到宿主机的端口无关
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/_health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  assets:

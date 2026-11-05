@@ -1,0 +1,437 @@
+{
+  "id": "let-222164",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222164",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222164@/discussions",
+  "published_at": "2026-10-16T18:31:59+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": true,
+    "event_type": "black_friday",
+    "product_types": [
+      "vps",
+      "dedicated"
+    ],
+    "lang": "en",
+    "vendor": "HostDZire",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1261&currency=1&billingcycle=annually",
+    "ends_at": null,
+    "plan_format": "pipe",
+    "plans_truncated": true,
+    "plans": [
+      {
+        "name": "IN CloudVPS Special #3",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 4,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 21,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1261&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #3",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 4,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 38,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1261&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #3",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 4,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 50,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1261&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #4",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 6,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 30,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1262&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #4",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 6,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 53,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1262&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #4",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 6,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 71,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1262&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #5",
+        "cpu_cores": 8,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 12,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 45,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1263&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #5",
+        "cpu_cores": 8,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 12,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 81,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1263&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #5",
+        "cpu_cores": 8,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 12,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 108,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1263&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #6",
+        "cpu_cores": 12,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 24,
+        "disk_gb": 240,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 12,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 71,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1271&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #6",
+        "cpu_cores": 12,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 24,
+        "disk_gb": 240,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 12,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 127,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1271&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN CloudVPS Special #6",
+        "cpu_cores": 12,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 24,
+        "disk_gb": 240,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 12,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 170,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1271&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #1",
+        "cpu_cores": 1,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 2,
+        "disk_gb": 500,
+        "disk_type": null,
+        "bandwidth_tb": 1,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 18,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1320&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #1",
+        "cpu_cores": 1,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 2,
+        "disk_gb": 500,
+        "disk_type": null,
+        "bandwidth_tb": 1,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 33,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1320&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #1",
+        "cpu_cores": 1,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 2,
+        "disk_gb": 500,
+        "disk_type": null,
+        "bandwidth_tb": 1,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 44,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1320&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #2",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 3,
+        "disk_gb": 1000,
+        "disk_type": null,
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 29,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1321&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #2",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 3,
+        "disk_gb": 1000,
+        "disk_type": null,
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 52,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1321&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #2",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 3,
+        "disk_gb": 1000,
+        "disk_type": null,
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 69,
+        "currency": "EUR",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1321&currency=1&billingcycle=triennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #3",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 4,
+        "disk_gb": 2000,
+        "disk_type": null,
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 58,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1322&currency=1&billingcycle=annually",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      },
+      {
+        "name": "IN StorageVPS #3",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Node",
+        "ram_gb": 4,
+        "disk_gb": 2000,
+        "disk_type": null,
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Mumbai"
+        ],
+        "price": 104,
+        "currency": "EUR",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://hostdzire.com/billing/cart.php?a=add&pid=1322&currency=1&billingcycle=biennially",
+        "coupon_code": null,
+        "notes": "同配置多周期；SATA（Raid60），无法判断是否 SSD；流量按 IN+Out 双向计费；价格不含税"
+      }
+    ],
+    "intel": null,
+    "notes": "共 41 个套餐（印度云 VPS 4 配置×3 周期、印度存储 VPS 6×3、加拿大独服 8、印度独服 3），按 5.11 只标前 20 个。机房 Mumbai 来自 'Our Indian VPS is hosted in Mumbai'，适用于印度云 VPS 与存储 VPS。无优惠码与百分比折扣，价格为 LET 专享价（price_note=promo）。赠品 IN StorageVPS #2 一年不计入套餐。无黑五落地页，purchase_url 取第一个下单链接。规范示例 10.1 是本帖的简化版，示例中的码 BFHD10 不在原文中。"
+  }
+}

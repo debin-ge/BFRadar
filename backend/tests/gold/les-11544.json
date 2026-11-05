@@ -1,0 +1,219 @@
+{
+  "id": "les-11544",
+  "source": "lowendspirit",
+  "url": "https://lowendspirit.com/discussion/11544",
+  "fixture": "fixtures/lowendspirit_vps_2026-11-02.xml",
+  "fixture_item_guid": "11544@/discussions",
+  "published_at": "2026-10-30T20:31:32+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": true,
+    "event_type": "black_friday",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "VM6",
+    "discount": {
+      "pct": 60,
+      "recurring": "first_term",
+      "text": "upto 60% OFF"
+    },
+    "coupon_codes": [
+      "BFVPS55",
+      "BFVPS60"
+    ],
+    "purchase_url": "https://www.vm6.co.uk/promotions",
+    "ends_at": "2026-11-30",
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "UK EPYC E4",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC 7642",
+        "ram_gb": 4,
+        "disk_gb": 60,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 10,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 27,
+        "currency": "GBP",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://www.vm6.co.uk/enterprise-vps-uk",
+        "coupon_code": "BFVPS55",
+        "notes": "原价 £60/年；约 36.13 USD；首期折扣，续费恢复原价"
+      },
+      {
+        "name": "UK EPYC E4",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC 7642",
+        "ram_gb": 4,
+        "disk_gb": 60,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 10,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 48,
+        "currency": "GBP",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://www.vm6.co.uk/enterprise-vps-uk",
+        "coupon_code": "BFVPS60",
+        "notes": "同配置多周期；约 64.22 USD；首期折扣，续费恢复原价"
+      },
+      {
+        "name": "UK EPYC E8",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC 7642",
+        "ram_gb": 8,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 10,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 48.6,
+        "currency": "GBP",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://www.vm6.co.uk/enterprise-vps-uk",
+        "coupon_code": "BFVPS55",
+        "notes": "约 65.03 USD；首期折扣，续费恢复原价"
+      },
+      {
+        "name": "UK EPYC E8",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC 7642",
+        "ram_gb": 8,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 10,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 86.4,
+        "currency": "GBP",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://www.vm6.co.uk/enterprise-vps-uk",
+        "coupon_code": "BFVPS60",
+        "notes": "同配置多周期；约 115.60 USD；首期折扣，续费恢复原价"
+      },
+      {
+        "name": "UK EPYC E16",
+        "cpu_cores": 6,
+        "cpu_desc": "AMD EPYC 7642",
+        "ram_gb": 16,
+        "disk_gb": 240,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 12,
+        "port_gbps": 10,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 163.2,
+        "currency": "GBP",
+        "period": "biennial",
+        "price_note": "promo",
+        "order_url": "https://www.vm6.co.uk/enterprise-vps-uk",
+        "coupon_code": "BFVPS60",
+        "notes": "只有两年付；约 218.36 USD；首期折扣，续费恢复原价"
+      },
+      {
+        "name": "UK Xeon S",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6230",
+        "ram_gb": 1,
+        "disk_gb": 20,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 2,
+        "port_gbps": null,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 1.75,
+        "currency": "GBP",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://www.vm6.co.uk/cheap-vps-uk",
+        "coupon_code": null,
+        "notes": "约 2.34 USD；端口未写"
+      },
+      {
+        "name": "UK Xeon M",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6230",
+        "ram_gb": 2,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": null,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 3.5,
+        "currency": "GBP",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://www.vm6.co.uk/cheap-vps-uk",
+        "coupon_code": null,
+        "notes": "约 4.68 USD；端口未写"
+      },
+      {
+        "name": "UK Xeon L",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6230",
+        "ram_gb": 4,
+        "disk_gb": 60,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 6,
+        "port_gbps": null,
+        "locations": [
+          "Norwich"
+        ],
+        "price": 7,
+        "currency": "GBP",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://www.vm6.co.uk/cheap-vps-uk",
+        "coupon_code": null,
+        "notes": "约 9.37 USD；端口未写"
+      },
+      {
+        "name": "UK AMD G2",
+        "cpu_cores": 2,
+        "cpu_desc": "Ryzen 9 9950X",
+        "ram_gb": 2,
+        "disk_gb": 50,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 10,
+        "locations": [
+          "Coventry"
+        ],
+        "price": 6,
+        "currency": "GBP",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://www.vm6.co.uk/uk-vps-hosting",
+        "coupon_code": null,
+        "notes": "约 8.03 USD"
+      }
+    ],
+    "intel": null,
+    "notes": "与 let-222765 为同一活动在 LES 的转发，套餐、码、折扣性质相同；本帖没有赠品段。标题写作 'upto 60% OFF'。"
+  }
+}

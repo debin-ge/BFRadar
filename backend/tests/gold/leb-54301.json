@@ -1,0 +1,40 @@
+{
+  "id": "leb-54301",
+  "source": "lowendbox",
+  "url": "https://lowendbox.com/blog/massivegrid-when-the-lifetime-price-guarantee-turns-out-to-not-be-quite-so-lifetime/",
+  "fixture": "fixtures/lowendbox_feed_2026-11-02.xml",
+  "fixture_item_guid": "https://lowendbox.com/?p=54301",
+  "published_at": "2026-10-28T11:00:42+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "intel",
+    "is_black_friday": false,
+    "event_type": "other",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "MassiveGrid",
+    "discount": {
+      "pct": null,
+      "recurring": null,
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": null,
+    "ends_at": null,
+    "plan_format": null,
+    "plans_truncated": false,
+    "plans": [],
+    "intel": {
+      "category": "news",
+      "vendor_mention": [
+        "MassiveGrid"
+      ]
+    },
+    "notes": "报道 MassiveGrid 取消去年 LET 促销的'终身价'。正文多次出现 lifetime / locked in forever，但不是本帖的促销 → intel，用于检验分类器不被 lifetime 误导。"
+  }
+}

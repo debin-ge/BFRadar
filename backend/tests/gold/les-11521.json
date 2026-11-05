@@ -1,0 +1,33 @@
+{
+  "id": "les-11521",
+  "source": "lowendspirit",
+  "url": "https://lowendspirit.com/discussion/11521",
+  "fixture": "fixtures/lowendspirit_services_2026-11-02.xml",
+  "fixture_item_guid": "11521@/discussions",
+  "published_at": "2026-10-27T17:57:58+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "ignore",
+    "is_black_friday": false,
+    "event_type": "other",
+    "product_types": [],
+    "lang": "en",
+    "vendor": null,
+    "discount": {
+      "pct": null,
+      "recurring": null,
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": null,
+    "ends_at": null,
+    "plan_format": null,
+    "plans_truncated": false,
+    "plans": [],
+    "intel": null,
+    "notes": "只卖邮箱托管，产品不在收录范围内（D62）→ ignore。原标注：产品名 OnePoundEmail，商家 DragonWebHost。'HALLOWEEN31 applies to every renewal' → recurring。每项同时给原价与用码价，取用码价；码全帖通用，不写入套餐。disk_gb 为邮箱存储容量。"
+  }
+}

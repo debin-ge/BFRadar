@@ -1,0 +1,36 @@
+{
+  "id": "les-11436",
+  "source": "lowendspirit",
+  "url": "https://lowendspirit.com/discussion/11436",
+  "fixture": "fixtures/lowendspirit_free-offers-and-stuff_2026-11-02.xml",
+  "fixture_item_guid": "11436@/discussions",
+  "published_at": "2026-10-07T17:51:02+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "holdout",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": true,
+    "event_type": "black_friday",
+    "product_types": [
+      "dedicated",
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "DartNode",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://dartnode.com",
+    "ends_at": "2026-10-28",
+    "plan_format": "none",
+    "plans_truncated": false,
+    "plans": [],
+    "intel": null,
+    "notes": "'Countdown to Black Friday' 系列的 LES 专属抽奖帖，帖内无可购买套餐；按 5.3 优先级取 black_friday。奖品为独服（月度大奖）与直播间 VPS，product_types 按赠品类型填写（仅赠品）。'Giveaway servers are renewable at 30% off retail value' 只针对中奖服务器，不是促销折扣。正式黑五直播 11-26。"
+  }
+}

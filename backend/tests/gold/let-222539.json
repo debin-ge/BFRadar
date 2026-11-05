@@ -1,0 +1,158 @@
+{
+  "id": "let-222539",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222539",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222539@/discussions",
+  "published_at": "2026-10-26T05:57:43+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "dedicated"
+    ],
+    "lang": "en",
+    "vendor": "HostNoc",
+    "discount": {
+      "pct": 10,
+      "recurring": "first_term",
+      "text": "Additional 10% Off First Month"
+    },
+    "coupon_codes": [
+      "LET10"
+    ],
+    "purchase_url": "https://members.hostnoc.com/store/france/hn-fr1?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+    "ends_at": null,
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "HN-FR1",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Atom C2350 1.7GHz",
+        "ram_gb": 4,
+        "disk_gb": 1000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Paris"
+        ],
+        "price": 14.36,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/france/hn-fr1?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $15.95/月；1x1TB HDD SATA；unmetered"
+      },
+      {
+        "name": "HN-NL3",
+        "cpu_cores": 6,
+        "cpu_desc": "Intel Xeon D-1531 2.2GHz",
+        "ram_gb": 32,
+        "disk_gb": 1000,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 52.16,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/netherlands/hn-nl3?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $57.95/月；2x500GB SSD SATA；unmetered"
+      },
+      {
+        "name": "HN-GR1",
+        "cpu_cores": 8,
+        "cpu_desc": "AMD Ryzen 7 1700X 3.4GHz",
+        "ram_gb": 32,
+        "disk_gb": 2000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Dusseldorf"
+        ],
+        "price": 58.5,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/germany-servers/hn-gr1?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $65.00/月；2x1TB HDD SATA；unmetered"
+      },
+      {
+        "name": "HN-KD3",
+        "cpu_cores": 6,
+        "cpu_desc": "Intel Xeon E5-1650 v3 3.5GHz",
+        "ram_gb": 64,
+        "disk_gb": 1000,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Dallas"
+        ],
+        "price": 80.96,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/kdallas/hn-kd3?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $89.95/月；1x1TB SSD SATA；unmetered"
+      },
+      {
+        "name": "HN-UK3",
+        "cpu_cores": 8,
+        "cpu_desc": "Intel Xeon E5-2640 v3 2.6GHz",
+        "ram_gb": 128,
+        "disk_gb": 8000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "London"
+        ],
+        "price": 90.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/uk-servers/hn-uk3?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $100.00/月；4x2TB HDD SATA；unmetered"
+      },
+      {
+        "name": "HN-AUS1",
+        "cpu_cores": 4,
+        "cpu_desc": "Intel Xeon E3-1270 v6 3.8GHz",
+        "ram_gb": 32,
+        "disk_gb": 4000,
+        "disk_type": "HDD",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Sydney"
+        ],
+        "price": 90.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://members.hostnoc.com/store/australia/hn-aus1?utm_source=let&utm_medium=offers&utm_campaign=dedicated+servers+2",
+        "coupon_code": null,
+        "notes": "首月用码 LET10 后价格；续费 $100.00/月；2x2TB HDD SATA"
+      }
+    ],
+    "intel": null,
+    "notes": "每台同时给首月价（用码 LET10）与续费价，按 6.11 取促销价（首月价）；码全帖通用，不写入套餐。LET10 只作用于首月 → first_term（续费价本身不涨）。核数取物理核（2c/2t → 2）。"
+  }
+}

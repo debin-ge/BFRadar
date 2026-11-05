@@ -1,0 +1,179 @@
+{
+  "id": "let-222157",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222157",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222157@/discussions",
+  "published_at": "2026-10-16T15:14:14+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "NolimitHost",
+    "discount": {
+      "pct": 25,
+      "recurring": "recurring",
+      "text": "25% Recurring Discount"
+    },
+    "coupon_codes": [
+      "LETS2026",
+      "LETB25"
+    ],
+    "purchase_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=49&coupon=LETB25",
+    "ends_at": null,
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Budget VPS 1",
+        "cpu_cores": 2,
+        "cpu_desc": null,
+        "ram_gb": 4,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 8.24,
+        "currency": "EUR",
+        "period": "quarter",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=49&coupon=LETB25",
+        "coupon_code": "LETB25",
+        "notes": "原文 '8.24€/quarterly'；介质按硬件说明 NVME"
+      },
+      {
+        "name": "Budget VPS 2",
+        "cpu_cores": 3,
+        "cpu_desc": null,
+        "ram_gb": 8,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 8.24,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=50&coupon=LETB25",
+        "coupon_code": "LETB25",
+        "notes": "介质按硬件说明 NVME"
+      },
+      {
+        "name": "Budget VPS 3",
+        "cpu_cores": 4,
+        "cpu_desc": null,
+        "ram_gb": 12,
+        "disk_gb": 120,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 1,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 11.99,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=51&coupon=LETB25",
+        "coupon_code": "LETB25",
+        "notes": "介质按硬件说明 NVME"
+      },
+      {
+        "name": "Budget VPS 4",
+        "cpu_cores": 5,
+        "cpu_desc": null,
+        "ram_gb": 16,
+        "disk_gb": 160,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 8,
+        "port_gbps": 1,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 15.74,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=52&coupon=LETB25",
+        "coupon_code": "LETB25",
+        "notes": "介质按硬件说明 NVME"
+      },
+      {
+        "name": "Budget VPS - Special Offer",
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 1,
+        "disk_gb": 10,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 2,
+        "port_gbps": 0.5,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 18.99,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=114",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Budget VPS IPv6 Only - Special Offer",
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 1,
+        "disk_gb": 10,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 2,
+        "port_gbps": 0.5,
+        "locations": [
+          "Frankfurt"
+        ],
+        "price": 12.99,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=85",
+        "coupon_code": null,
+        "notes": "IPv6-only"
+      },
+      {
+        "name": "Storage VPS - Special Offer",
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 1,
+        "disk_gb": 500,
+        "disk_type": "HDD",
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Eygelshoven"
+        ],
+        "price": 26.99,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://panel.nolimitcloud.eu/billing/checkout_page?checkout=120",
+        "coupon_code": null,
+        "notes": "另含 10 GB NVMe"
+      }
+    ],
+    "intel": null,
+    "notes": "LETB25（德国 Budget VPS 循环 25%）绑定 Budget VPS 1–4；LETS2026（荷兰 Storage VPS 产品线循环 20%）指向另一帖的产品线，本帖套餐未注明适用，不写入套餐。Budget VPS 1 原文写季付且与 Budget VPS 2 月付同价，疑为原帖笔误，金标按原文。免费赠送 1.5 TB 流量不计入价格。"
+  }
+}

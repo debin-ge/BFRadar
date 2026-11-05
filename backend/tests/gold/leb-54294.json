@@ -1,0 +1,36 @@
+{
+  "id": "leb-54294",
+  "source": "lowendbox",
+  "url": "https://lowendbox.com/blog/is-this-the-ai-nuclear-winter/",
+  "fixture": "fixtures/lowendbox_feed_2026-11-02.xml",
+  "fixture_item_guid": "https://lowendbox.com/?p=54294",
+  "published_at": "2026-10-31T11:00:56+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "intel",
+    "is_black_friday": false,
+    "event_type": "other",
+    "product_types": [],
+    "lang": "en",
+    "vendor": null,
+    "discount": {
+      "pct": null,
+      "recurring": null,
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": null,
+    "ends_at": null,
+    "plan_format": null,
+    "plans_truncated": false,
+    "plans": [],
+    "intel": {
+      "category": "news",
+      "vendor_mention": []
+    },
+    "notes": "行业评论（AI 投资回报），与主机优惠无关但属主机博客资讯 → intel/news。"
+  }
+}

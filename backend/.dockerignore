@@ -1,0 +1,11 @@
+# 构建上下文为 backend/，只留镜像要用的文件（main.py、app/、pyproject.toml、requirements.txt）
+.venv
+.env
+.env.*
+data
+tests
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+**/.DS_Store

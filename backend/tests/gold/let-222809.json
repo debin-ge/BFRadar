@@ -1,0 +1,98 @@
+{
+  "id": "let-222809",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222809",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222809@/discussions",
+  "published_at": "2026-10-31T20:52:07+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "holdout",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "holiday",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "HostSailor",
+    "discount": {
+      "pct": 50,
+      "recurring": "recurring",
+      "text": "50% OFF Lifetime"
+    },
+    "coupon_codes": [
+      "HALLOWEEN50"
+    ],
+    "purchase_url": "https://clients.hostsailor.com/modules/addons/promo_and_url_tracking/redirect.php?ref=halloween26-nvme-recurring-let",
+    "ends_at": "2026-11-04",
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "MINISAILOR – NVMe VPS",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD EPYC 9534",
+        "ram_gb": 1,
+        "disk_gb": 30,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 1,
+        "port_gbps": 1,
+        "locations": [
+          "Netherlands"
+        ],
+        "price": 29.94,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://clients.hostsailor.com/modules/addons/promo_and_url_tracking/redirect.php?ref=halloween26-nvme-recurring-let",
+        "coupon_code": null,
+        "notes": "RAID10 NVMe；另有 1GB VSwap"
+      },
+      {
+        "name": "SAILOR – NVMe VPS",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC 9534",
+        "ram_gb": 2,
+        "disk_gb": 50,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 2,
+        "port_gbps": 1,
+        "locations": [
+          "Netherlands"
+        ],
+        "price": 53.94,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://clients.hostsailor.com/modules/addons/promo_and_url_tracking/redirect.php?ref=halloween26-nvme-recurring-let",
+        "coupon_code": null,
+        "notes": "RAID10 NVMe；另有 2GB VSwap"
+      },
+      {
+        "name": "SEAMAN – NVMe VPS",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC 9534",
+        "ram_gb": 4,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 4,
+        "port_gbps": 1,
+        "locations": [
+          "Netherlands"
+        ],
+        "price": 95.94,
+        "currency": "USD",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://clients.hostsailor.com/modules/addons/promo_and_url_tracking/redirect.php?ref=halloween26-nvme-recurring-let",
+        "coupon_code": null,
+        "notes": "RAID10 NVMe；另有 4GB VSwap；价格行未写周期，按 'Billing Cycle: Annual Billing' 取年付"
+      }
+    ],
+    "intel": null,
+    "notes": "'50% OFF for LIFE' → recurring（折扣语境的 lifetime）。每个套餐为'字段: 值'逐行书写，按 5.12 归为 list。价格已含五折（'50% Discount Applied'），码全帖通用。"
+  }
+}

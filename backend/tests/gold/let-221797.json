@@ -1,0 +1,416 @@
+{
+  "id": "let-221797",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/221797",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "221797@/discussions",
+  "published_at": "2026-10-06T16:15:03+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "restock",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "DeluxHost",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://deluxhost.net/en/deals",
+    "ends_at": null,
+    "plan_format": "table",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "STORAGE-1",
+        "cpu_cores": 1,
+        "cpu_desc": "Intel Xeon E5-2699 v4",
+        "ram_gb": 2,
+        "disk_gb": 500,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Eygelshoven"
+        ],
+        "price": 1.49,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=storage-1&cycle=monthly",
+        "coupon_code": null,
+        "notes": "另含 5 GB NVMe；续费不涨价；IPv4 数量未写"
+      },
+      {
+        "name": "STORAGE-2",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Xeon E5-2699 v4",
+        "ram_gb": 3,
+        "disk_gb": 1000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Eygelshoven"
+        ],
+        "price": 1.99,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=storage-2&cycle=monthly",
+        "coupon_code": null,
+        "notes": "另含 10 GB NVMe；续费不涨价；IPv4 数量未写"
+      },
+      {
+        "name": "STORAGE-3",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Xeon E5-2699 v4",
+        "ram_gb": 4,
+        "disk_gb": 2000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Eygelshoven"
+        ],
+        "price": 3.99,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=storage-3&cycle=monthly",
+        "coupon_code": null,
+        "notes": "另含 20 GB NVMe；续费不涨价；IPv4 数量未写"
+      },
+      {
+        "name": "STORAGE-4",
+        "cpu_cores": 2,
+        "cpu_desc": "Intel Xeon E5-2699 v4",
+        "ram_gb": 6,
+        "disk_gb": 3000,
+        "disk_type": "HDD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Eygelshoven"
+        ],
+        "price": 6.99,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=storage-4&cycle=monthly",
+        "coupon_code": null,
+        "notes": "另含 30 GB NVMe；续费不涨价；IPv4 数量未写"
+      },
+      {
+        "name": "Z-0",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6122",
+        "ram_gb": 0.5,
+        "disk_gb": 8,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 6,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=z-0&cycle=annually",
+        "coupon_code": null,
+        "notes": "IPv6-only"
+      },
+      {
+        "name": "Z-1",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6122",
+        "ram_gb": 1,
+        "disk_gb": 20,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 9,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=z-1&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Z-2",
+        "cpu_cores": 1,
+        "cpu_desc": "Dual Intel Xeon Gold 6122",
+        "ram_gb": 2,
+        "disk_gb": 40,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 12,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=z-2&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Z-3",
+        "cpu_cores": 2,
+        "cpu_desc": "Dual Intel Xeon Gold 6122",
+        "ram_gb": 4,
+        "disk_gb": 60,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 14,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=z-3&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Z-4",
+        "cpu_cores": 2,
+        "cpu_desc": "Dual Intel Xeon Gold 6122",
+        "ram_gb": 8,
+        "disk_gb": 80,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 18,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=z-4&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "T-0",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD EPYC 7551P",
+        "ram_gb": 0.5,
+        "disk_gb": 8,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 0.5,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 6,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=t-0&cycle=annually",
+        "coupon_code": null,
+        "notes": "IPv6-only"
+      },
+      {
+        "name": "T-1",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD EPYC 7551P",
+        "ram_gb": 1,
+        "disk_gb": 20,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 9,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=t-1&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "T-2",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD EPYC 7551P",
+        "ram_gb": 2,
+        "disk_gb": 40,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 12,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=t-2&cycle=annually",
+        "coupon_code": null,
+        "notes": "端口一栏写 Unmetered，未给速率"
+      },
+      {
+        "name": "T-3",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC 7551P",
+        "ram_gb": 4,
+        "disk_gb": 60,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 14,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=t-3&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "T-4",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC 7551P",
+        "ram_gb": 8,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 18,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=t-4&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Q-0",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD Ryzen 9 7950X / 7950X3D",
+        "ram_gb": 0.5,
+        "disk_gb": 8,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 0.5,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 8,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=q-0&cycle=annually",
+        "coupon_code": null,
+        "notes": "IPv6-only"
+      },
+      {
+        "name": "Q-1",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD Ryzen 9 7950X / 7950X3D",
+        "ram_gb": 1,
+        "disk_gb": 8,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 13,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=q-1&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Q-2",
+        "cpu_cores": 1,
+        "cpu_desc": "AMD Ryzen 9 7950X / 7950X3D",
+        "ram_gb": 2,
+        "disk_gb": 10,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 18,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=q-2&cycle=annually",
+        "coupon_code": null,
+        "notes": null
+      },
+      {
+        "name": "Q-3",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD Ryzen 9 7950X / 7950X3D",
+        "ram_gb": 4,
+        "disk_gb": 30,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 28,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=q-3&cycle=annually",
+        "coupon_code": null,
+        "notes": "端口一栏写 Unmetered，未给速率"
+      },
+      {
+        "name": "Q-4",
+        "cpu_cores": 3,
+        "cpu_desc": "AMD Ryzen 9 7950X / 7950X3D",
+        "ram_gb": 8,
+        "disk_gb": 40,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 38,
+        "currency": "EUR",
+        "period": "year",
+        "price_note": "promo",
+        "order_url": "https://deluxhost.net/en/cart?add=q-4&cycle=annually",
+        "coupon_code": null,
+        "notes": "端口一栏写 Unmetered，未给速率"
+      }
+    ],
+    "intel": null,
+    "notes": "补货为主要主题 → restock。无百分比折扣与码；只有 Storage 写明 'Monthly pricing does not increase on renewal'，其余系列未说明续费，recurring 取 unknown。Q 系列 'Stock is extremely limited' 为区块说明，只记录级。年付订单随机赠送资源（+1 vCore / 端口 / +1 GB RAM），不计入套餐。"
+  }
+}

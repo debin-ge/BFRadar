@@ -1,0 +1,11 @@
+# frontend/Dockerfile 专用（构建上下文是仓库根，BuildKit 优先用这份）：只放行前端源码与界面字典
+*
+!frontend/
+!backend/app/i18n/
+
+frontend/node_modules
+frontend/build
+frontend/.react-router
+frontend/*.tsbuildinfo
+frontend/.env
+**/.DS_Store

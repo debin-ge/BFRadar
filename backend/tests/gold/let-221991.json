@@ -1,0 +1,296 @@
+{
+  "id": "let-221991",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/221991",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "221991@/discussions",
+  "published_at": "2026-10-12T07:15:19+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "KhanWebHost",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://khanwebhost.com/store/canada-kvm-vps/vps-kvm2gb-promo",
+    "ends_at": null,
+    "plan_format": "pipe",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Canada-KVM2GB",
+        "cpu_cores": 2,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 2,
+        "disk_gb": 50,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Montreal"
+        ],
+        "price": 5,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/canada-kvm-vps/vps-kvm2gb-promo",
+        "coupon_code": null,
+        "notes": "unmetered"
+      },
+      {
+        "name": "Canada-KVM4GB",
+        "cpu_cores": 4,
+        "cpu_desc": "AMD EPYC",
+        "ram_gb": 4,
+        "disk_gb": 80,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Montreal"
+        ],
+        "price": 7,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/canada-kvm-vps/vps-ca4gb-promo",
+        "coupon_code": null,
+        "notes": "unmetered"
+      },
+      {
+        "name": "France -KVM1GB",
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 1,
+        "disk_gb": 10,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "France"
+        ],
+        "price": 7,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/kvm-vps-flash-sale/nl-1024mb-nat-1",
+        "coupon_code": null,
+        "notes": "NAT IPv4；unmetered（原文 Unlimited BW）"
+      },
+      {
+        "name": "Houston-Texas-KVM2GB",
+        "cpu_cores": 2,
+        "cpu_desc": null,
+        "ram_gb": 2,
+        "disk_gb": 40,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Houston"
+        ],
+        "price": 5,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/virtual-private-servers/vps-usa-2gb-promo",
+        "coupon_code": null,
+        "notes": "同配置多周期；unmetered"
+      },
+      {
+        "name": "Houston-Texas-KVM2GB",
+        "cpu_cores": 2,
+        "cpu_desc": null,
+        "ram_gb": 2,
+        "disk_gb": 40,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Houston"
+        ],
+        "price": 60,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/virtual-private-servers/vps-usa-2gb-promo",
+        "coupon_code": null,
+        "notes": "同配置多周期；unmetered"
+      },
+      {
+        "name": "Houston-Texas-KVM3GB",
+        "cpu_cores": 2,
+        "cpu_desc": null,
+        "ram_gb": 3,
+        "disk_gb": 60,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Houston"
+        ],
+        "price": 7.5,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/virtual-private-servers/vps-usa-3gb-promo",
+        "coupon_code": null,
+        "notes": "同配置多周期；unmetered；含 DDoS 防护"
+      },
+      {
+        "name": "Houston-Texas-KVM3GB",
+        "cpu_cores": 2,
+        "cpu_desc": null,
+        "ram_gb": 3,
+        "disk_gb": 60,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Houston"
+        ],
+        "price": 90,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/virtual-private-servers/vps-usa-3gb-promo",
+        "coupon_code": null,
+        "notes": "同配置多周期；unmetered；含 DDoS 防护"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 0.8,
+        "port_gbps": 0.5,
+        "locations": [
+          "South Africa"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 0.8,
+        "port_gbps": 10,
+        "locations": [
+          "Hong Kong"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 0.8,
+        "port_gbps": 10,
+        "locations": [
+          "Tokyo"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 0.8,
+        "port_gbps": 10,
+        "locations": [
+          "Sweden"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 1,
+        "port_gbps": 10,
+        "locations": [
+          "Amsterdam"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      },
+      {
+        "name": null,
+        "cpu_cores": 1,
+        "cpu_desc": null,
+        "ram_gb": 0.25,
+        "disk_gb": 5,
+        "disk_type": "SSD",
+        "bandwidth_tb": 1,
+        "port_gbps": 10,
+        "locations": [
+          "Germany"
+        ],
+        "price": 5.5,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://khanwebhost.com/store/nat-vps-flash-sale/256-mb-sgjphksasepknlde",
+        "coupon_code": null,
+        "notes": "LXC NAT VPS（原文又写 OVZ Virtualization），NAT IPv4 20 个端口；各机房流量与端口不同，按机房分列；CPU 只写 'AMD Eypc (JP,SE)'，未填 cpu_desc"
+      }
+    ],
+    "intel": null,
+    "notes": "前 7 个套餐为竖线行，NAT 段为字段行 + 按机房下单链接；竖线行套餐多，plan_format 取 pipe。'$5/Month or $60/Year' 拆为同配置两周期。无落地页，purchase_url 取第一个下单链接。"
+  }
+}

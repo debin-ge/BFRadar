@@ -1,0 +1,54 @@
+{
+  "id": "let-222534",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222534",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222534@/discussions",
+  "published_at": "2026-10-26T04:11:23+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "anniversary",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "GreenCloud",
+    "discount": {
+      "pct": null,
+      "recurring": "recurring",
+      "text": "13% cashback as account credit"
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://greencloudvps.com/billing/store/13th-birthday-sale",
+    "ends_at": "2026-10-31",
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "1313",
+        "cpu_cores": 6,
+        "cpu_desc": "EPYC Milan",
+        "ram_gb": 13,
+        "disk_gb": 113,
+        "disk_type": "NVMe",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [],
+        "price": 123,
+        "currency": "USD",
+        "period": "triennial",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "NVMe 4.0 RAID-10；Bandwidth 写作 '3333GB/12TB' 无法确定月流量，留空；Location 写作 'APAC/USA/EU'，为区域而非机房，留空"
+      }
+    ],
+    "intel": null,
+    "notes": "正文 'Important Notice: No Black Friday Sale This Year' 明确本次不是黑五活动 → is_black_friday=false，生日活动 → anniversary。'committed to keeping our renewal prices unchanged' → recurring。满 $500 返 13% 账户余额写入 discount.text，不是百分比折扣，pct 留空。抽奖奖品不计入套餐。"
+  }
+}

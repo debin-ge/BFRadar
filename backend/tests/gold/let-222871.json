@@ -1,0 +1,126 @@
+{
+  "id": "let-222871",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222871",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222871@/discussions",
+  "published_at": "2026-11-02T10:48:02+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "vps"
+    ],
+    "lang": "en",
+    "vendor": "Godlike.host",
+    "discount": {
+      "pct": 50,
+      "recurring": "first_term",
+      "text": "50% off your first payment"
+    },
+    "coupon_codes": [
+      "LEB50"
+    ],
+    "purchase_url": "https://godlike.host/letoffer",
+    "ends_at": null,
+    "plan_format": "pipe",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Nitro 1",
+        "cpu_cores": 1,
+        "cpu_desc": "EPYC 75F3",
+        "ram_gb": 2,
+        "disk_gb": 30,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Los Angeles",
+          "USA East",
+          "Netherlands"
+        ],
+        "price": 2.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "首付 $2.00（用码），之后 $4.00/月；入站不计、出站 5 TB"
+      },
+      {
+        "name": "Nitro 2",
+        "cpu_cores": 2,
+        "cpu_desc": "EPYC 75F3",
+        "ram_gb": 4,
+        "disk_gb": 50,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Los Angeles",
+          "USA East",
+          "Netherlands"
+        ],
+        "price": 4.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "首付 $4.00（用码），之后 $8.00/月；入站不计、出站 5 TB"
+      },
+      {
+        "name": "Ultra 1",
+        "cpu_cores": 1,
+        "cpu_desc": "Ryzen 9 9950X3D",
+        "ram_gb": 2,
+        "disk_gb": 30,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Los Angeles",
+          "USA East",
+          "Netherlands"
+        ],
+        "price": 2.5,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "首付 $2.50（用码），之后 $5.00/月；入站不计、出站 5 TB"
+      },
+      {
+        "name": "Ultra 2",
+        "cpu_cores": 2,
+        "cpu_desc": "Ryzen 9 9950X3D",
+        "ram_gb": 4,
+        "disk_gb": 50,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 5,
+        "port_gbps": 1,
+        "locations": [
+          "Los Angeles",
+          "USA East",
+          "Netherlands"
+        ],
+        "price": 5.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "首付 $5.00（用码），之后 $10.00/月；入站不计、出站 5 TB"
+      }
+    ],
+    "intel": null,
+    "notes": "码 LEB50 全帖通用，不写入套餐 coupon_code；'Renewals are at the regular price' → first_term。价格同时给首付价与续费价，按 6.11 取促销价（首付价）。三个机房均适用全部套餐，'USA East' 原文无城市名。只有一个总下单链接，套餐 order_url 留空。"
+  }
+}

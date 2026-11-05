@@ -1,0 +1,33 @@
+{
+  "id": "leb-54311",
+  "source": "lowendbox",
+  "url": "https://lowendbox.com/blog/mango-mail-halloween-sale-up-to-40-perfect-off-on-high-quality-email-hosting-100gb-plan-only-8-70-month/",
+  "fixture": "fixtures/lowendbox_feed_2026-11-02.xml",
+  "fixture_item_guid": "https://lowendbox.com/?p=54311",
+  "published_at": "2026-10-30T11:00:17+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "ignore",
+    "is_black_friday": false,
+    "event_type": "other",
+    "product_types": [],
+    "lang": "en",
+    "vendor": null,
+    "discount": {
+      "pct": null,
+      "recurring": null,
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": null,
+    "ends_at": null,
+    "plan_format": null,
+    "plans_truncated": false,
+    "plans": [],
+    "intel": null,
+    "notes": "只卖邮箱托管，产品不在收录范围内（D62）→ ignore。原标注：价格写在段落句子中 → freetext。'limited time' 是时间限制而非库存说明，库存取 UNVERIFIED。无下单链接。"
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "id": "let-222165",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222165",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222165@/discussions",
+  "published_at": "2026-10-16T19:36:09+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "dedicated"
+    ],
+    "lang": "en",
+    "vendor": "QuickServers",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": null
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://quickservers.net/dedicated-servers",
+    "ends_at": null,
+    "plan_format": "pipe",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Dual E5-2690",
+        "cpu_cores": 16,
+        "cpu_desc": "Dual E5-2690",
+        "ram_gb": 256,
+        "disk_gb": 1200,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 64.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "4x 300GB SAS；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2690 v2",
+        "cpu_cores": 20,
+        "cpu_desc": "Dual E5-2690 v2",
+        "ram_gb": 128,
+        "disk_gb": 2400,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 49.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "4x 600GB SAS；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2680 v2",
+        "cpu_cores": 20,
+        "cpu_desc": "Dual E5-2680 v2",
+        "ram_gb": 128,
+        "disk_gb": 600,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 44.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "600GB，未写介质；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2630L v2",
+        "cpu_cores": 12,
+        "cpu_desc": "Dual E5-2630L v2",
+        "ram_gb": 128,
+        "disk_gb": 2400,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 44.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "2x 1.2TB SAS；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual Xeon Gold 6140",
+        "cpu_cores": 36,
+        "cpu_desc": "Dual Xeon Gold 6140",
+        "ram_gb": 128,
+        "disk_gb": 480,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 79.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "unmetered（fair use）"
+      },
+      {
+        "name": "Single E5-2640 v4",
+        "cpu_cores": 10,
+        "cpu_desc": "Single E5-2640 v4",
+        "ram_gb": 128,
+        "disk_gb": 1900,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 69.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "1.9TB SAS SSD；unmetered（fair use）"
+      },
+      {
+        "name": "Single E5-2640 v4",
+        "cpu_cores": 10,
+        "cpu_desc": "Single E5-2640 v4",
+        "ram_gb": 128,
+        "disk_gb": 2400,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 10,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 69.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "4x 600GB SAS；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2630 v2",
+        "cpu_cores": 12,
+        "cpu_desc": "Dual E5-2630 v2",
+        "ram_gb": 128,
+        "disk_gb": 9600,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 59.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "16x 600GB SAS (9.6TB raw)；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2680 v2",
+        "cpu_cores": 20,
+        "cpu_desc": "Dual E5-2680 v2",
+        "ram_gb": 128,
+        "disk_gb": 9600,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 59.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "16x 600GB SAS (9.6TB raw)；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dual E5-2680 v3",
+        "cpu_cores": 24,
+        "cpu_desc": "Dual E5-2680 v3",
+        "ram_gb": 128,
+        "disk_gb": 9600,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 96.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "16x 600GB SAS (9.6TB raw)；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Single E5-2450L",
+        "cpu_cores": 8,
+        "cpu_desc": "Single E5-2450L",
+        "ram_gb": 32,
+        "disk_gb": 2400,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 29.99,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/dedicated-servers",
+        "coupon_code": null,
+        "notes": "4x 600GB SAS；SAS 无法判断介质，disk_type 留空；unmetered（fair use）"
+      },
+      {
+        "name": "Dedicated Mac mini M4",
+        "cpu_cores": 10,
+        "cpu_desc": "Apple M4",
+        "ram_gb": 16,
+        "disk_gb": 256,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 109.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/mac-mini-hosting",
+        "coupon_code": null,
+        "notes": "2 available；unlimited"
+      },
+      {
+        "name": "Dedicated Intel Mac mini (2018)",
+        "cpu_cores": 6,
+        "cpu_desc": "Intel Mac mini (2018)",
+        "ram_gb": 32,
+        "disk_gb": 512,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 1,
+        "locations": [
+          "Phoenix"
+        ],
+        "price": 69.0,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://quickservers.net/mac-mini-hosting",
+        "coupon_code": null,
+        "notes": "1 ready now；unlimited"
+      }
+    ],
+    "intel": null,
+    "notes": "每行一个套餐、以 '·' 分隔字段，按单行分隔符形态归为 pipe（见 gold/README 约定）。核数取物理核（16c/32t → 16）。多盘写总容量；SAS 未注明 SSD 时介质留空。全部月付、Phoenix、1Gbps unmetered。"
+  }
+}

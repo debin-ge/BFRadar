@@ -1,0 +1,76 @@
+{
+  "id": "les-11479",
+  "source": "lowendspirit",
+  "url": "https://lowendspirit.com/discussion/11479",
+  "fixture": "fixtures/lowendspirit_dedicated-server_2026-11-02.xml",
+  "fixture_item_guid": "11479@/discussions",
+  "published_at": "2026-10-18T15:56:02+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "holdout",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "dedicated"
+    ],
+    "lang": "en",
+    "vendor": "Swify",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": "Save €100/month!"
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://swify.io",
+    "ends_at": null,
+    "plan_format": "table",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Dual Xeon Gold 6138 / 256GB RAM / 25Gbps Unmetered",
+        "cpu_cores": 40,
+        "cpu_desc": "2× Intel Xeon Gold 6138 @ 2.00GHz",
+        "ram_gb": 256,
+        "disk_gb": 500,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 25,
+        "locations": [
+          "Netherlands"
+        ],
+        "price": 1200,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "Regular Price: €1,300/month；不含 VAT；25Gbps 独享 unmetered；IPv4 'Available' 未写数量；当天交付"
+      },
+      {
+        "name": "Dual Xeon Gold 6138 / 256GB RAM / 25Gbps Unmetered",
+        "cpu_cores": 40,
+        "cpu_desc": "2× Intel Xeon Gold 6138 @ 2.00GHz",
+        "ram_gb": 256,
+        "disk_gb": 8000,
+        "disk_type": "SSD",
+        "bandwidth_tb": null,
+        "port_gbps": 25,
+        "locations": [
+          "Netherlands"
+        ],
+        "price": 1200,
+        "currency": "EUR",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": null,
+        "coupon_code": null,
+        "notes": "2×4TB SSD（8TB Raw），同价；Regular Price: €1,300/month；不含 VAT；48 小时内交付"
+      }
+    ],
+    "intel": null,
+    "notes": "配置在 HTML 规格表中，价格另起一行；两种存储同价，按两个可选配置分列。通过论坛私信下单，无下单链接，purchase_url 取官网。正文后半为 YABS 跑分（<pre> 内的 markdown 表格），不含套餐。"
+  }
+}

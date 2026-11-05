@@ -1,0 +1,116 @@
+{
+  "id": "let-222462",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222462",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222462@/discussions",
+  "published_at": "2026-10-24T12:21:40+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": false,
+    "event_type": "sale",
+    "product_types": [
+      "storage"
+    ],
+    "lang": "en",
+    "vendor": "SystemFreaks",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": "Free Unmetered Egress"
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://manager.systemfreaks.com/order/config/index/S3-Compatible-Object-storage/?group_id=38&pricing_id=3752",
+    "ends_at": null,
+    "plan_format": "list",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "Standard",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 100,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Canada"
+        ],
+        "price": 7.2,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://manager.systemfreaks.com/order/config/index/S3-Compatible-Object-storage/?group_id=38&pricing_id=3752",
+        "coupon_code": null,
+        "notes": "from 100 GB；出站流量为存储量 3× 免费，超出 $1/TB"
+      },
+      {
+        "name": "Standard",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 1000,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Canada"
+        ],
+        "price": 6,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://manager.systemfreaks.com/order/config/index/S3-Compatible-Object-storage/?group_id=38&pricing_id=3752",
+        "coupon_code": null,
+        "notes": "from 1 TB，按 $6/TB/月计价；出站流量为存储量 3× 免费"
+      },
+      {
+        "name": "Unmetered",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 100,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Canada"
+        ],
+        "price": 9.6,
+        "currency": "USD",
+        "period": "year",
+        "price_note": null,
+        "order_url": "https://manager.systemfreaks.com/order/config/index/S3-Compatible-Object-storage/?group_id=38&pricing_id=3741",
+        "coupon_code": null,
+        "notes": "from 100 GB；出站不限量（fair use）"
+      },
+      {
+        "name": "Unmetered",
+        "cpu_cores": null,
+        "cpu_desc": null,
+        "ram_gb": null,
+        "disk_gb": 1000,
+        "disk_type": null,
+        "bandwidth_tb": null,
+        "port_gbps": null,
+        "locations": [
+          "Canada"
+        ],
+        "price": 8,
+        "currency": "USD",
+        "period": "month",
+        "price_note": null,
+        "order_url": "https://manager.systemfreaks.com/order/config/index/S3-Compatible-Object-storage/?group_id=38&pricing_id=3741",
+        "coupon_code": null,
+        "notes": "from 1 TB，按 $8/TB/月计价；出站不限量（fair use）"
+      }
+    ],
+    "intel": null,
+    "notes": "S3 兼容对象存储。价格写作 'from 100 GB at $7.20/year'，给出了最小容量与套餐名，按套餐处理（不同于只有 'from $5/mo' 的情形）。促销内容为回帖订单号后把 Standard 出站升级为不限量，记入 discount.text。旧的 $4/TB 优惠已结束，不收录。"
+  }
+}

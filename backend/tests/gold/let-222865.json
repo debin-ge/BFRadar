@@ -1,0 +1,96 @@
+{
+  "id": "let-222865",
+  "source": "lowendtalk",
+  "url": "https://lowendtalk.com/discussion/222865",
+  "fixture": "fixtures/lowendtalk_offers_2026-11-02.xml",
+  "fixture_item_guid": "222865@/discussions",
+  "published_at": "2026-11-02T04:29:06+00:00",
+  "annotator": "claude",
+  "reviewed_by": null,
+  "spec_version": "1.1",
+  "split": "dev",
+  "labels": {
+    "record_kind": "offer",
+    "is_black_friday": true,
+    "event_type": "black_friday",
+    "product_types": [
+      "dedicated"
+    ],
+    "lang": "en",
+    "vendor": "PureVoltage",
+    "discount": {
+      "pct": null,
+      "recurring": "unknown",
+      "text": "FREE double bandwidth for LET members"
+    },
+    "coupon_codes": [],
+    "purchase_url": "https://my.purevoltage.com/?cmd=cart&action=add&id=253&utm_source=LET&utm_medium=black-friday-2026&utm_campaign=nyc-presale&utm_content=v3a",
+    "ends_at": "2026-11-25",
+    "plan_format": "table",
+    "plans_truncated": false,
+    "plans": [
+      {
+        "name": "1× Intel Xeon E5-2670v3",
+        "cpu_cores": null,
+        "cpu_desc": "Intel Xeon E5-2670v3",
+        "ram_gb": 64,
+        "disk_gb": 1000,
+        "disk_type": "SSD",
+        "bandwidth_tb": 100,
+        "port_gbps": 1,
+        "locations": [
+          "New York"
+        ],
+        "price": 60,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://my.purevoltage.com/?cmd=cart&action=add&id=253&utm_source=LET&utm_medium=black-friday-2026&utm_campaign=nyc-presale&utm_content=v3a",
+        "coupon_code": null,
+        "notes": "LET 用户回帖订单号可免费翻倍流量至 200TB；IPv4 为 /31 中 1 个可用"
+      },
+      {
+        "name": "1× Intel Xeon E5-2699v3",
+        "cpu_cores": null,
+        "cpu_desc": "Intel Xeon E5-2699v3",
+        "ram_gb": 64,
+        "disk_gb": 1000,
+        "disk_type": "SSD",
+        "bandwidth_tb": 100,
+        "port_gbps": 1,
+        "locations": [
+          "New York"
+        ],
+        "price": 70,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://my.purevoltage.com/?cmd=cart&action=add&id=254&utm_source=LET&utm_medium=black-friday-2026&utm_campaign=nyc-presale&utm_content=v3b",
+        "coupon_code": null,
+        "notes": "LET 用户回帖订单号可免费翻倍流量至 200TB；IPv4 为 /31 中 1 个可用"
+      },
+      {
+        "name": "AMD Ryzen 9 9950X",
+        "cpu_cores": null,
+        "cpu_desc": "AMD Ryzen 9 9950X",
+        "ram_gb": 64,
+        "disk_gb": 2000,
+        "disk_type": "NVMe",
+        "bandwidth_tb": 100,
+        "port_gbps": 10,
+        "locations": [
+          "New York"
+        ],
+        "price": 200,
+        "currency": "USD",
+        "period": "month",
+        "price_note": "promo",
+        "order_url": "https://my.purevoltage.com/?cmd=cart&action=add&id=178&utm_source=LET&utm_medium=black-friday-2026&utm_campaign=nyc-presale&utm_content=r9950x",
+        "coupon_code": null,
+        "notes": "LET 用户回帖订单号可免费翻倍流量至 200TB；IPv4 为 /31 中 1 个可用；存储为 2× 1TB NVMe"
+      }
+    ],
+    "intel": null,
+    "notes": "Pre-Black Friday 预售（11-01 至 11-25），正式黑五活动 11-26 公布。无百分比折扣，赠送翻倍流量写入 discount.text。仅写 CPU 型号未写核数，cpu_cores 留空；无落地页，purchase_url 取第一个下单链接。每周六抽奖不计入。"
+  }
+}

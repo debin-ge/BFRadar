@@ -199,11 +199,12 @@ def test_status_page(web):
 
 
 def test_about_page(web):
-    """验收 9：关于页有免责说明，来源只在这里交代（D59）；没有"更正、移除与联系"一节，也不放邮箱链接（D69），
-    但仍写明采集程序的 User-Agent。"""
+    """验收 9：关于页有免责说明；没有"更正、移除与联系"一节，也不放邮箱链接（D69）；
+    "数据从哪里来""多久更新一次"两节按用户要求去掉（2026-11-05），页面上不再写采集程序的 User-Agent。"""
     page = lxml.html.fromstring(web.get("/about").content)
     text = page.text_content()
-    assert "不构成购买建议" in text and "更正、移除与联系" not in text and "BFRadar/0.1" in text
+    assert "不构成购买建议" in text and "更正、移除与联系" not in text
+    assert [w for w in ("数据从哪里来", "多久更新一次", "BFRadar/0.1", "robots.txt") if w in text] == []
     assert not page.xpath("//a[starts-with(@href, 'mailto:')]")
 
 

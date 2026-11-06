@@ -399,6 +399,176 @@
     flex-wrap: wrap;
     gap: 4px 18px;
   }
+  .colophon-inner .sponsor-foot a {
+    color: var(--fg-3);
+    text-decoration: underline;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 3px;
+  }
+  .colophon-inner .sponsor-foot a:hover {
+    color: var(--signal);
+    text-decoration-color: currentColor;
+  }
+
+  /* 首页赞助横幅（倒计时块正下方）：配色取自 tiktoken.net 的主题——深石板蓝黑底（#020617 到 #0f172a）、细网格线、
+     靛紫（#4f46e5、#6366f1）到青（#06b6d4、#22d3ee）的渐变；横幅自己的颜色，不进页面外框，亮暗两种主题下都一样。
+     右边的渐变块斜切，放赠送额度；整块可点（.sb-cta 的伪元素铺满横幅）。没有动效、没有发光。 */
+  .sponsor-banner {
+    --sb-bg: #020617;
+    --sb-bg-2: #0f172a;
+    --sb-indigo: #4f46e5;
+    --sb-indigo-2: #6366f1;
+    --sb-indigo-3: #818cf8;
+    --sb-cyan: #22d3ee;
+    --sb-cyan-2: #06b6d4;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 30%);
+    overflow: hidden;
+    border: 1px solid #ffffff26;
+    border-radius: 12px;
+    background:
+      linear-gradient(#6366f114 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(90deg, #6366f114 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(110deg, var(--sb-bg), var(--sb-bg-2));
+    color: #fff;
+  }
+  .sponsor-banner:has(a:focus-visible) {
+    outline: 2px solid var(--sb-indigo-3);
+    outline-offset: 3px;
+  }
+  /* 桌面：logo（下面挂"赞助"标）在左，标题、说明、按钮三行在右，整块高约 165 px */
+  .sb-main {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 28px;
+    min-width: 0;
+    padding: 22px 72px 22px 36px;
+  }
+  .sb-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .sb-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+  .sb-logo {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 16px;
+    border-radius: 10px;
+    background: #fff;
+  }
+  .sb-logo img {
+    display: block;
+    height: 32px;
+    width: auto;
+  }
+  .sb-tag {
+    padding: 0 7px;
+    border: 1px solid #ffffff40;
+    border-radius: 3px;
+    font: 11.5px/1.7 var(--font-code);
+    color: #ffffffb3;
+  }
+  .sb-title,
+  .sb-sub {
+    word-break: keep-all; /* 中文不在字间断行（只在空格与标点处），放不下才硬折 */
+    overflow-wrap: anywhere;
+  }
+  .sb-title {
+    font: 800 clamp(22px, 2.4vw, 32px) / 1.25 var(--font-ui);
+    text-wrap: balance;
+  }
+  .sb-title:lang(en) {
+    font-size: clamp(19px, 1.9vw, 24px);
+  }
+  .sb-hl {
+    background: linear-gradient(to right, var(--sb-indigo-3), var(--sb-cyan), var(--sb-indigo-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .sb-sub {
+    text-wrap: pretty;
+    max-width: 40em;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #cbd5e1;
+  }
+  .sb-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin-top: 6px;
+  }
+  .sb-cta {
+    padding: 8px 20px;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--sb-indigo-2), var(--sb-indigo));
+    font: 600 14.5px/1.4 var(--font-ui);
+    color: #fff;
+    text-decoration: none;
+  }
+  .sb-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+  .sponsor-banner:hover .sb-cta {
+    background: linear-gradient(to right, var(--sb-indigo-3), var(--sb-indigo-2));
+  }
+  .sb-domain {
+    font: 13px/1.4 var(--font-code);
+    color: #94a3b8;
+  }
+  .sb-offer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    margin-left: -56px;
+    padding: 20px 40px 20px 100px;
+    clip-path: polygon(56px 0, 100% 0, 100% 100%, 0 100%);
+    background: linear-gradient(135deg, var(--sb-indigo) 0%, #3b82f6 58%, var(--sb-cyan-2) 100%);
+    color: #fff;
+  }
+  .sb-offer-label,
+  .sb-offer-note {
+    font: 600 13px/1.5 var(--font-code);
+    letter-spacing: 0.02em;
+  }
+  .sb-offer-amount {
+    font: 400 clamp(40px, 4.6vw, 64px) / 1 var(--font-code);
+    letter-spacing: -0.05em;
+  }
+  @media (min-width: 701px) and (max-width: 999px) {
+    .sponsor-banner {
+      grid-template-columns: minmax(0, 1fr) 240px;
+    }
+    .sb-main {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 8px;
+      padding: 20px 56px 20px 28px;
+    }
+    .sb-brand {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .sb-offer {
+      padding: 20px 28px 20px 84px;
+    }
+  }
   /* 页面容器（D68）：首屏通栏，其余内容各自收在 1440 px 的版心里 */
   .page {
     --gut: 24px;
@@ -2050,38 +2220,6 @@
     color: var(--signal);
     text-underline-offset: 3px;
   }
-  .prose code {
-    padding: 1px 6px;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    background: var(--panel-2);
-    font: 12.5px/1.6 var(--font-code);
-    overflow-wrap: anywhere;
-  }
-  .intervals {
-    width: 100%;
-    margin: 16px 0;
-    border-collapse: collapse;
-    font-size: 14.5px;
-    line-height: 1.6;
-  }
-  .intervals th,
-  .intervals td {
-    padding: 9px 14px;
-    border: 1px solid var(--line);
-    text-align: left;
-  }
-  .intervals thead th {
-    background: var(--panel-2);
-    font-weight: 700;
-    color: var(--fg);
-  }
-  .intervals tbody th {
-    font: 600 13px/1.6 var(--font-code);
-  }
-  .intervals tbody tr:nth-child(even) {
-    background: var(--panel);
-  }
   .terms {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -2182,6 +2320,60 @@
     .colophon-inner {
       padding: 20px 16px 32px;
     }
+    .sponsor-banner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .sb-main {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 8px;
+      padding: 16px 16px 18px;
+    }
+    .sb-brand {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .sb-logo {
+      padding: 6px 12px;
+    }
+    .sb-logo img {
+      height: 22px;
+    }
+    .sb-title {
+      font-size: 19px;
+    }
+    .sb-sub {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .sb-cta {
+      padding: 7px 18px;
+    }
+    /* 额度收成一行：大字在左，标签与说明上下叠在右 */
+    .sb-offer {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: "amount label" "amount note";
+      align-items: center;
+      column-gap: 14px;
+      row-gap: 0;
+      margin-left: 0;
+      margin-top: -14px;
+      padding: 26px 16px 12px;
+      clip-path: polygon(0 14px, 100% 0, 100% 100%, 0 100%);
+    }
+    .sb-offer-amount {
+      grid-area: amount;
+      font-size: 40px;
+    }
+    .sb-offer-label {
+      grid-area: label;
+      align-self: end;
+    }
+    .sb-offer-note {
+      grid-area: note;
+      align-self: start;
+    }
     .countdown-block {
       --cd-size: clamp(40px, 13.4vw, 64px);
       --rs: 130vw; /* 手机上雷达比屏幕还宽，只露出一角 */
@@ -2273,10 +2465,6 @@
     .prose h2 {
       margin-top: 34px;
       font-size: 20px;
-    }
-    .intervals th,
-    .intervals td {
-      padding: 8px 10px;
     }
     /* 套餐表折成卡片：第一行商家、套餐名、价格；第二行配置（带字段名）；第三行所属优惠与下单 */
     .pv-wrap {

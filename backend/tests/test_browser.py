@@ -280,16 +280,41 @@ def test_about_page_reads_like_a_rendered_document(browser, web, viewport):
         assert page.evaluate("getComputedStyle(document.querySelector('.prose li')).listStyleType") == "disc"
         box = page.locator(".prose").bounding_box()
         assert box["width"] <= 820 and box["x"] >= 14 and box["x"] + box["width"] <= viewport["width"] - 14, box
-        assert page.locator(".prose h2").count() == 6
+        assert page.locator(".prose h2").count() == 5  # 范围、价格、免责、赞助与推广、隐私（没有"数据从哪里来""多久更新一次"）
+        assert not {"数据从哪里来", "多久更新一次"} & set(page.locator(".prose h2").all_inner_texts())
         assert "更正、移除与联系" not in page.locator(".prose").inner_text()
         assert page.evaluate("document.documentElement.scrollWidth") <= viewport["width"]
         assert problems == []
 
 
+def test_home_sponsor_banner(browser, web):
+    """赞助横幅：紧跟在倒计时块后面、列表前面（不在列表里）；是一块够大的横幅而不是窄条；logo 是赞助方的原图
+    （放在白色底板上，不改色）；横幅与页脚的链接都标 sponsored，新窗口打开；手机上不横向溢出。"""
+    for viewport in ({"width": 1280, "height": 800}, PHONE):
+        with opened(browser, web, "/", viewport=viewport) as (page, problems):
+            hydrated(page)
+            assert page.locator("ol.deals > li.deal-ad, ol.deals .sponsor-banner").count() == 0
+            order = page.evaluate("""() => [...document.querySelector('main.page').children].map(e => e.className.split(' ')[0])""")
+            assert order.index("sponsor-slot") == order.index("countdown-block") + 1 and order.index("board-layout") == order.index("sponsor-slot") + 1, order
+            box = page.locator(".sponsor-banner").bounding_box()
+            assert 150 <= box["height"] <= 280 and box["width"] >= min(1200, viewport["width"] - 40), (viewport, box)  # 够大，也不过高（桌面约 165、手机约 265）
+            logo = page.locator(".sb-logo img")
+            assert logo.evaluate("e => e.complete && e.naturalWidth") == 360
+            assert page.locator(".sb-logo").evaluate("e => getComputedStyle(e).backgroundColor") == "rgb(255, 255, 255)"
+            for sel in (".sponsor-banner a.sb-cta", ".sponsor-foot a"):
+                link = page.locator(sel)
+                assert link.get_attribute("href") == "https://tiktoken.net/", sel
+                assert {"sponsored", "nofollow", "noopener"} <= set(link.get_attribute("rel").split()), sel
+                assert link.get_attribute("target") == "_blank", sel
+            assert page.evaluate("document.documentElement.scrollWidth") <= viewport["width"]
+            assert problems == []
+
+
 def test_home_first_card_is_near_the_top(browser, web):
-    """首屏（O-09、D68）：通栏首屏（倒计时、读数）之后第一条优惠仍在第一屏内——桌面 1280×800 下 ≤ 720 px、手机 ≤ 720 px；
-    读数在倒计时块里，"24 小时动态"在右侧栏。"""
-    for viewport, limit in (({"width": 1280, "height": 800}, 720), (PHONE, 720)):
+    """首屏（O-09、D68）：通栏首屏（倒计时、读数）与赞助横幅之后，第一条优惠不能被推得太远。
+    赞助横幅按用户决定放在倒计时正下方（2026-11-05），首条优惠因此落到首屏下沿：桌面 1280×800 下 ≤ 850 px、手机 ≤ 900 px
+    （放横幅之前是 720；横幅压到约 165 px / 手机约 265 px 之后实测 798 / 846）。上限是给横幅封顶的，别让它再长高；读数在倒计时块里，"24 小时动态"在右侧栏。"""
+    for viewport, limit in (({"width": 1280, "height": 800}, 850), (PHONE, 900)):
         with opened(browser, web, "/", viewport=viewport) as (page, problems):
             hydrated(page)
             top = page.locator("ol.deals > li").first.bounding_box()["y"]

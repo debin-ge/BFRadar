@@ -454,12 +454,10 @@ def test_about_data(site, tmp_path):
     _, _, client = site
     about = client.get("/internal/v1/zh/about").json()
     assert about["seo"]["title"] == "关于本站 · 黑五雷达" and "contact" not in about
-    assert "BFRadar/0.1" in about["user_agent"]
-    assert {"name": "NodeSeek", "normal": "每 5 分钟", "bf": "每 3 分钟"} in about["intervals"]
-    assert {"name": "Reddit", "normal": "每小时", "bf": "每小时"} in about["intervals"]
-    with copied_site(site, tmp_path, CONTACT_EMAIL="ops@example.com") as (_, other):  # 邮箱只进 User-Agent，页面不再有联系与移除一节（D69）
+    assert set(about) == {"seo", "scope_bf"}  # 数据来源、更新频率两节去掉后，间隔、更新方式、User-Agent 不再下发（2026-11-05）
+    with copied_site(site, tmp_path, CONTACT_EMAIL="ops@example.com") as (_, other):  # 邮箱只进 User-Agent，页面上不出现（D69）
         data = other.get("/internal/v1/zh/about").json()
-        assert "contact" not in data and "ops@example.com" in data["user_agent"]
+        assert "contact" not in data and "ops@example.com" not in str(data)
 
 
 # ---------------------------------------------------------------- RSS（M2.9）
@@ -691,7 +689,7 @@ def test_internal_plans_deal_vendor_and_about(site, tmp_path):
     assert vendor["lowest"]["href"].startswith("/deal/")
 
     about = client.get("/internal/v1/en/about").json()
-    assert "contact" not in about and [i["name"] for i in about["intervals"]] == ["LET", "NodeSeek", "Reddit"]
+    assert "contact" not in about
     assert "2026-10-01" in about["scope_bf"]
     for data in (plans, deal, vendor, about):
         assert not all_keys(data) & HIDDEN_KEYS

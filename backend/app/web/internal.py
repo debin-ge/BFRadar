@@ -467,7 +467,7 @@ def _vendor(request: Request, view: View, slug: str) -> JSONResponse:
 
 @router.get("/{lang}/about")
 def about(request: Request, lang: str) -> Response:
-    """关于页（FR-20、第 17 节）：只给带数据的部分（各源间隔、本季起点、黑五周、联系邮箱、UA），其余是字典里的固定文字。"""
+    """关于页（FR-20、第 17 节）：只给带数据的部分（本季起点），其余是字典里的固定文字。"""
     if lang not in LANGS:
         return error(404, "not_found", "没有这种语言")
     view = _view(request, lang)
@@ -478,13 +478,7 @@ def _about(request: Request, view: View) -> JSONResponse:
     s, t = request.app.state.settings, view.t
     return _json({
         "seo": seo.about(s, view),
-        "intervals_bf": t("about.update.bf", start=s.bf_week_start.strftime("%m-%d"),
-                          end=s.bf_week_end.strftime("%m-%d")),
-        "intervals": [{"name": t(f"source.{x}"), "normal": view.every(s.intervals[x]),
-                       "bf": view.every(s.intervals_bf[x])} for x in STATUS_SOURCES if x in s.sources],
-        "update_mode": t("about.update.llm") if s.llm_enabled else t("about.update.rules_only"),
         "scope_bf": t("about.scope.bf", season=s.season_start.strftime("%Y-%m-%d")),
-        "user_agent": s.user_agent,
     })
 
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 
+import { SponsorFootnote } from "~/components/sponsor";
 import { HTML_LANG, type Lang, PREFIX, type T } from "~/lib/i18n";
 import { cycleTheme } from "~/lib/theme";
 import type { Chrome, Seo } from "~/lib/types";
@@ -98,6 +99,7 @@ export function SiteFooter({ lang, t, chrome }: Omit<Props, "pathname" | "altern
       <div className="colophon-inner">
         {chrome && <p>{chrome.footer}</p>}
         <p>{t("footer.names")}</p>
+        <SponsorFootnote t={t} />
         <nav>
           <Link to={`${PREFIX[lang]}/vendors`}>{t("footer.vendors")}</Link>
           <Link to={`${PREFIX[lang]}/codes`}>{t("footer.codes")}</Link>

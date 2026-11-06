@@ -246,11 +246,7 @@ export type VendorsPage = {
 
 export type AboutPage = {
   seo: Seo;
-  intervals_bf: string;
-  intervals: { name: string; normal: string; bf: string }[];
-  update_mode: string;
   scope_bf: string;
-  user_agent: string;
 };
 
 /** 采集状态页：概况的每一格与各源最近 10 轮的表，文字都由后端按语言格式化好。 */

@@ -4,6 +4,7 @@ import type { Route } from "./+types/home";
 import { filterHandlers, IntelList, Pager, ScopeTabs } from "~/components/common";
 import { CountdownBlock } from "~/components/countdown";
 import { DealCard } from "~/components/deal-card";
+import { SponsorBanner } from "~/components/sponsor";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { NativeSelect, NativeSelectOption } from "~/components/ui/native-select";
@@ -152,6 +153,7 @@ export default function HomePage({ loaderData: d }: Route.ComponentProps) {
           </dl>
         </CountdownBlock>
       )}
+      <SponsorBanner t={t} />
       <div className="board-layout">
         <section className="board" aria-label={t(`scope.${scope}`)}>
           <ScopeTabs scopes={d.scopes} t={t} />

@@ -57,7 +57,8 @@ def nonce(r) -> str:
 
 
 def check_page(path: str, r) -> None:
-    """一页 HTML 的全部要求：没有内联样式；没有 src 的脚本要么带本次响应的 nonce，要么是 JSON-LD 数据块。"""
+    """一页 HTML 的全部要求：没有内联样式；没有 src 的脚本要么带本次响应的 nonce 与
+    data-cfasync="false"，要么是 JSON-LD 数据块。"""
     lang = split_lang(path)[0]
     assert r.headers["content-type"] == "text/html; charset=utf-8", path
     assert (r.headers["x-frame-options"], r.headers["x-content-type-options"]) == ("DENY", "nosniff"), path
@@ -73,6 +74,8 @@ def check_page(path: str, r) -> None:
     n = nonce(r)
     scripts = [s for s in doc.iter("script") if s.get("src") is None and s.get("type") != "application/ld+json"]
     assert scripts and all(s.get("nonce") == n for s in scripts), path
+    # Cloudflare 的 Rocket Loader 会改写没有这个标记的内联脚本，重插入后没有 nonce，被 CSP 拦下、页面无法水合
+    assert [s for s in scripts if s.get("data-cfasync") != "false"] == [], path
     for ld in doc.xpath("//script[@type='application/ld+json']"):  # 抓取来的标题（带 < 的也有）关不掉数据块
         json.loads(ld.text)
     assert doc.xpath("//a[@href=$href]", href=("/en" if lang == "en" else "") + "/about"), path

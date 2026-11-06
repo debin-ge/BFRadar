@@ -1,7 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { PassThrough } from "node:stream";
+import { Writable } from "node:stream";
 
-import { createReadableStreamFromReadable } from "@react-router/node";
 import { renderToPipeableStream } from "react-dom/server";
 import type { EntryContext } from "react-router";
 import { ServerRouter } from "react-router";
@@ -26,6 +25,15 @@ function setSecurityHeaders(headers: Headers, nonce: string) {
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 }
 
+/** 让 Cloudflare 的 Rocket Loader 放过页面里的内联脚本。Rocket Loader 会把内联脚本改写后重新插入页面，新插入的脚本没有
+ *  nonce，被上面的 CSP 拦下：水合脚本全部失效，页面只剩没有交互的 HTML（主题按钮要等水合完成才显示，也就不见了）。
+ *  data-cfasync="false" 是 Cloudflare 规定的"这个脚本别动"标记，必须写在每个脚本上。React Router 自己输出的
+ *  数据脚本只接受 nonce 一个属性，没法从外面加，所以在整页渲染完后统一替换；nonce 每个请求都是新的随机值，
+ *  页面内容里不会撞上这个字符串。 */
+function exemptFromRocketLoader(html: string, nonce: string) {
+  return html.replaceAll(`<script nonce="${nonce}"`, `<script data-cfasync="false" nonce="${nonce}"`);
+}
+
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -42,7 +50,7 @@ export default function handleRequest(
     let shellRendered = false;
     let timeoutId: ReturnType<typeof setTimeout> | undefined = setTimeout(() => abort(), streamTimeout + 1000);
 
-    // 一律等全部内容就绪再输出：Cloudflare 缓存与爬虫拿到的都是完整页面
+    // 一律等全部内容就绪再输出：Cloudflare 缓存与爬虫拿到的都是完整页面（也因此整页在内存里改写脚本标记）
     const { pipe, abort } = renderToPipeableStream(
       <NonceContext value={nonce}>
         <ServerRouter context={routerContext} url={request.url} nonce={nonce} />
@@ -51,19 +59,23 @@ export default function handleRequest(
         nonce,
         onAllReady() {
           shellRendered = true;
-          const body = new PassThrough({
+          const status = responseStatusCode;
+          const chunks: Buffer[] = [];
+          const body = new Writable({
+            write(chunk: Buffer, _encoding, callback) {
+              chunks.push(chunk);
+              callback();
+            },
             final(callback) {
               clearTimeout(timeoutId);
               timeoutId = undefined;
+              responseHeaders.set("Content-Type", "text/html; charset=utf-8");
+              setSecurityHeaders(responseHeaders, nonce);
+              resolve(new Response(exemptFromRocketLoader(Buffer.concat(chunks).toString("utf8"), nonce), { headers: responseHeaders, status }));
               callback();
             },
           });
-          responseHeaders.set("Content-Type", "text/html; charset=utf-8");
-          setSecurityHeaders(responseHeaders, nonce);
           pipe(body);
-          resolve(
-            new Response(createReadableStreamFromReadable(body), { headers: responseHeaders, status: responseStatusCode }),
-          );
         },
         onShellError(error: unknown) {
           reject(error);

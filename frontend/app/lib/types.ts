@@ -14,6 +14,7 @@ export type Seo = {
     site_name: string;
     locale: string;
     image: string | null;
+    image_alt: string;
   };
   jsonld: Record<string, unknown>[];
 };

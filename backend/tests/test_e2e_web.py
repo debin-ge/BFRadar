@@ -117,6 +117,27 @@ def test_nonce_is_new_for_every_response(web):
 # ---------------------------------------------------------------- 单点
 
 
+@pytest.mark.parametrize("lang,prefix", [("zh", ""), ("en", "/en")])
+def test_social_cards_are_in_initial_html(live, web, lang, prefix):
+    """手机分享与 Twitterbot 不执行 JS，也要拿到完整的大图卡片字段与可访问的图片。"""
+    vm6 = next(d["id"] for d in live.json("/api/deals?scope=all&q=VM6")["items"] if d["url"] == VM6)
+    for path in ("/", "/plans", f"/deal/{vm6}"):
+        r = web.get(prefix + path, headers={"User-Agent": "Twitterbot/1.0"})
+        assert r.status_code == 200
+        doc = lxml.html.fromstring(r.content)
+        meta = {m.get("name") or m.get("property"): m.get("content") for m in doc.xpath("//head/meta")}
+        assert meta["twitter:card"] == "summary_large_image"
+        assert meta["twitter:title"] == meta["og:title"]
+        assert meta["twitter:description"] == meta["og:description"]
+        assert meta["twitter:image:alt"] == meta["og:image:alt"] and meta["twitter:image:alt"]
+        assert meta["twitter:image"] == meta["og:image"]
+        assert meta["twitter:image"].startswith(f"{SITE}/og/{lang}/") and "?v=" in meta["twitter:image"]
+        assert (meta["og:image:width"], meta["og:image:height"], meta["og:image:type"]) == ("1200", "630", "image/png")
+        image = web.get(meta["twitter:image"].removeprefix(SITE))
+        assert image.status_code == 200 and image.headers["content-type"] == "image/png"
+        assert len(image.content) < 5 * 1024 * 1024
+
+
 def test_data_requests_redirects_and_not_found(live, web):
     vm6 = next(d["id"] for d in live.json("/api/deals?scope=all&q=VM6")["items"] if d["url"] == VM6)
     for page, data in (("/", "/_.data"), ("/en/", "/en/_.data"), ("/plans", "/plans.data"),

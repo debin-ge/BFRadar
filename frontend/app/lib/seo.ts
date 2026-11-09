@@ -24,11 +24,21 @@ export function seoMeta(seo: Seo | undefined): MetaDescriptor[] {
     ...(og.image
       ? [
           { property: "og:image", content: og.image },
+          { property: "og:image:type", content: "image/png" },
+          { property: "og:image:alt", content: og.image_alt },
           { property: "og:image:width", content: "1200" },
           { property: "og:image:height", content: "630" },
         ]
       : []),
     { name: "twitter:card", content: og.image ? "summary_large_image" : "summary" },
+    { name: "twitter:title", content: og.title },
+    { name: "twitter:description", content: og.description },
+    ...(og.image
+      ? [
+          { name: "twitter:image", content: og.image },
+          { name: "twitter:image:alt", content: og.image_alt },
+        ]
+      : []),
     ...seo.jsonld.map((item) => ({ "script:ld+json": item })),
   ];
 }

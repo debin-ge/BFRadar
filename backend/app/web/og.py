@@ -1,17 +1,19 @@
-"""分享预览图（M3.6，第 16 节）：每条优惠一张 1200×630 PNG，转发到微信、Telegram 时显示商家、标题与起价；其余页面用站点图。
+"""分享预览图：1200×630 深色雷达卡片，站点图说明用途，优惠图显示商家、标题与起价。
 
 用 Pillow 画，字体是仓库内置的 Noto Sans SC 子集（D27，fonts/，由 tests/tools/subset_font.py 生成）；字体里没有的字
 （emoji 等）去掉，免得出现方框。画好的图按"语言 + 编号 + 内容摘要"存到数据目录的 og/ 下：内容变了摘要就变，
-og:image 地址里带上摘要（?v=），Cloudflare 与浏览器可以长缓存；写新图时删掉同一条优惠的旧图。
+og:image 地址里带上摘要（?v=），摘要包含绘图版本，修改版式后不会继续命中旧图片；写新图时删掉同一条优惠的旧图。
 """
 
 import hashlib
 import io
 import json
+import math
 import os
 import re
 from functools import cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from fastapi import APIRouter, Request
 from fastapi.responses import FileResponse, Response
@@ -27,7 +29,8 @@ router = APIRouter(include_in_schema=False)
 WIDTH, HEIGHT = 1200, 630
 FONTS = Path(__file__).with_name("fonts")
 FONT = FONTS / "NotoSansSC-Bold-subset.otf"
-SHELF, PAPER, INK, INK_2, INK_3, TAG = "#e9ebe6", "#ffffff", "#000000", "#4a4f55", "#686d74", "#ffd500"
+BG, PANEL, INK, MUTED, SIGNAL, LINE = "#050b09", "#0c1d16", "#e8f3ed", "#9cbbac", "#2ee6b6", "#1b3b2e"
+RENDER_VERSION = "radar-1"  # 改版式或绘图文案时递增，同时更新公开图片 URL 和磁盘缓存。
 CACHE = "public, max-age=86400"
 LANGS = ("zh", "en")
 TOKEN = re.compile(r"\s+|[⺀-鿿＀-￯]|[^\s⺀-鿿＀-￯]+")  # 汉字逐字、西文按词
@@ -81,17 +84,19 @@ def deal_fields(settings: Settings, view: View, d: Deal) -> dict:
             "vendor": clean(view.vendor(d)), "title": clean(view.title(d)),
             "price": clean(price[0]) if price else clean(view.t("row.price_unknown")),
             "cny": clean(price[1]) if price else "",
-            "event": clean(view.t(f"event.{d.event_type}")) if d.is_black_friday else ""}
+            "event": clean(view.t(f"event.{d.event_type}")) if d.is_black_friday else "",
+            "domain": clean(urlsplit(settings.site_url).netloc)}
 
 
 def site_fields(settings: Settings, view: View) -> dict:
-    """站点图：大字站名（英文用全称，价签上已有简称）、一行说明、黄色价签写简称 BFRadar。"""
-    return {"lang": view.lang, "site": settings.site_name_zh if view.lang == "zh" else settings.site_fullname_en,
-            "headline": clean(view.t("site.title").split(" · ")[0]), "tag": settings.site_name_en}
+    """不放实时价格与数量，避免分享图长缓存后出现过期促销；域名来自站点配置。"""
+    return {"lang": view.lang, "site": clean(settings.site_name_zh if view.lang == "zh" else settings.site_name_en),
+            "year": settings.bf_week_start.year, "domain": clean(urlsplit(settings.site_url).netloc)}
 
 
 def version(fields: dict) -> str:
-    return hashlib.sha1(json.dumps(fields, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:10]
+    payload = {"renderer": RENDER_VERSION, "fields": fields}
+    return hashlib.sha1(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:10]
 
 
 def deal_url(settings: Settings, view: View, d: Deal) -> str:
@@ -106,20 +111,55 @@ def site_url(settings: Settings, view: View) -> str:
 
 
 def _canvas() -> tuple[Image.Image, ImageDraw.ImageDraw]:
-    img = Image.new("RGB", (WIDTH, HEIGHT), SHELF)
+    img = Image.new("RGB", (WIDTH, HEIGHT), BG)
     draw = ImageDraw.Draw(img)
-    draw.rounded_rectangle((40, 40, WIDTH - 40, HEIGHT - 40), radius=18, fill=PAPER)
+    for x in range(0, WIDTH, 48):
+        draw.line((x, 0, x, HEIGHT), fill="#0c1913")
+    for y in range(0, HEIGHT, 48):
+        draw.line((0, y, WIDTH, y), fill="#0c1913")
+    draw.line((64, 536, WIDTH - 64, 536), fill=LINE, width=2)
     return img, draw
 
 
-def _tag(draw: ImageDraw.ImageDraw, x: int, y: int, text: str, size: int) -> int:
-    """黄色挂牌价签（左边切角、打孔），与网站上"刚刚上架"的价签同一造型；返回右边界。"""
-    h, cut = size + 52, 18
-    w = int(font(size).getlength(text)) + 88
-    draw.polygon([(x + cut, y), (x + w, y), (x + w, y + h), (x + cut, y + h), (x, y + h - cut), (x, y + cut)], fill=TAG)
-    draw.ellipse((x + 14, y + h // 2 - 7, x + 28, y + h // 2 + 7), fill=PAPER)
-    draw.text((x + 50, y + h // 2), text, font=font(size), fill=INK, anchor="lm")
-    return x + w
+def _text(draw: ImageDraw.ImageDraw, xy: tuple[int, int], text: str, size: int, width: int, fill: str = INK) -> None:
+    """单行字段（商家、域名、价格）缩小后仍放不下时省略，不侵入其他区域。"""
+    while size > 18 and font(size).getlength(text) > width:
+        size -= 1
+    draw.text(xy, wrap(text, size, width, 1)[0] if text else "", font=font(size), fill=fill, anchor="lt")
+
+
+def _radar(draw: ImageDraw.ImageDraw, cx: int, cy: int, radius: int) -> None:
+    draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill="#081710")
+    draw.pieslice((cx - radius, cy - radius, cx + radius, cy + radius), 285, 325, fill="#103c2b")
+    for r in (radius, radius * 2 // 3, radius // 3):
+        draw.ellipse((cx - r, cy - r, cx + r, cy + r), outline="#24513c", width=2)
+    draw.line((cx - radius, cy, cx + radius, cy), fill=LINE, width=2)
+    draw.line((cx, cy - radius, cx, cy + radius), fill=LINE, width=2)
+    end = (cx + int(radius * math.cos(math.radians(325))), cy + int(radius * math.sin(math.radians(325))))
+    draw.line((cx, cy, *end), fill=SIGNAL, width=3)
+    for dx, dy in ((-64, 52), (68, -78), (32, 90)):
+        x, y = cx + dx * radius // 170, cy + dy * radius // 170
+        halo, dot = max(2, radius * 11 // 170), max(1, radius * 4 // 170)
+        draw.ellipse((x - halo, y - halo, x + halo, y + halo), fill="#133b2c")
+        draw.ellipse((x - dot, y - dot, x + dot, y + dot), fill=SIGNAL)
+
+
+def _header(draw: ImageDraw.ImageDraw, site: str, label: str) -> None:
+    _radar(draw, 84, 80, 22)
+    _text(draw, (122, 61), site, 30, 570)
+    w = font(20).getlength(label)
+    draw.text((WIDTH - 64 - w, 68), label, font=font(20), fill=MUTED, anchor="lt")
+
+
+def _footer(draw: ImageDraw.ImageDraw, f: dict) -> None:
+    label = "VPS · 独服 · 虚拟主机 · 存储" if f["lang"] == "zh" else "VPS · Dedicated · Hosting · Storage"
+    _text(draw, (64, 565), label, 22, 620, MUTED)
+    domain = f["domain"]
+    size = 26
+    while size > 18 and font(size).getlength(domain) > 390:
+        size -= 1
+    domain = wrap(domain, size, 390, 1)[0] if domain else ""
+    draw.text((WIDTH - 64, 565), domain, font=font(size), fill=SIGNAL, anchor="rt")
 
 
 def _png(img: Image.Image) -> bytes:
@@ -130,26 +170,34 @@ def _png(img: Image.Image) -> bytes:
 
 def render_deal(f: dict) -> bytes:
     img, draw = _canvas()
-    draw.text((84, 86), f["site"], font=font(30), fill=INK, anchor="lm")
-    if f["event"]:
-        w = font(28).getlength(f["event"])
-        draw.rounded_rectangle((WIDTH - 84 - w - 28, 64, WIDTH - 84, 108), radius=6, fill=INK)
-        draw.text((WIDTH - 84 - w - 14, 86), f["event"], font=font(28), fill=PAPER, anchor="lm")
-    draw.text((84, 160), f["vendor"], font=font(38), fill=INK_2, anchor="lm")
-    for n, line in enumerate(wrap(f["title"], 50, WIDTH - 168, 3)):
-        draw.text((84, 236 + n * 66), line, font=font(50), fill=INK, anchor="lm")
-    right = _tag(draw, 84, 436, f["price"], 60)
-    if f["cny"]:
-        draw.text((right + 28, 436 + 56), f["cny"], font=font(34), fill=INK_3, anchor="lm")
+    _header(draw, f["site"], f["event"] or "HOSTING DEALS")
+    _text(draw, (64, 133), f["vendor"], 28, WIDTH - 128, SIGNAL)
+    for n, line in enumerate(wrap(f["title"], 46, WIDTH - 128, 3)):
+        draw.text((64, 188 + n * 62), line, font=font(46), fill=INK, anchor="lt")
+    draw.rounded_rectangle((64, 405, WIDTH - 64, 508), radius=12, fill=PANEL, outline=LINE, width=2)
+    _text(draw, (90, 424), f["price"], 54, 620, SIGNAL)
+    _text(draw, (762, 443), f["cny"], 28, 340, MUTED)
+    _footer(draw, f)
     return _png(img)
 
 
 def render_site(f: dict) -> bytes:
     img, draw = _canvas()
-    draw.text((84, 150), f["site"], font=font(76), fill=INK, anchor="lm")
-    for n, line in enumerate(wrap(f["headline"], 46, WIDTH - 168, 2)):
-        draw.text((84, 250 + n * 62), line, font=font(46), fill=INK_2, anchor="lm")
-    _tag(draw, 84, 420, f["tag"], 60)
+    zh = f["lang"] == "zh"
+    _header(draw, f["site"], f"BLACK FRIDAY / {f['year']}")
+    _radar(draw, 966, 295, 166)
+    lines = ("黑五 VPS 优惠，", "放在一起比。") if zh else ("Black Friday VPS.", "Compare the deals.")
+    for y, text, color in ((174, lines[0], INK), (270, lines[1], SIGNAL)):
+        _text(draw, (64, y), text, 72 if zh else 64, 710, color)
+    subtitle = "按预算、配置和地区筛选套餐" if zh else "Filter by budget, specs and location."
+    _text(draw, (68, 373), subtitle, 28, 710, MUTED)
+    x = 64
+    for label in (("套餐比价", "优惠码", "续费条件") if zh else ("Compare plans", "Coupon codes", "Renewal terms")):
+        w = int(font(23).getlength(label)) + 40
+        draw.rounded_rectangle((x, 445, x + w, 495), radius=25, fill=PANEL, outline="#2b5942", width=2)
+        draw.text((x + 20, 458), label, font=font(23), fill=INK, anchor="lt")
+        x += w + 14
+    _footer(draw, f)
     return _png(img)
 
 

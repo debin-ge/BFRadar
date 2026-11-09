@@ -35,7 +35,8 @@ def page(settings: Settings, view: View, *, title: str, description: str, path: 
         "title": title, "description": description, "canonical": canonical, "alternates": alternates,
         "site_url": settings.site_url,
         "og": {"type": og_type, "title": og_title or title, "description": description, "url": canonical,
-               "site_name": site_name(settings, view), "locale": OG_LOCALE[view.lang], "image": image},
+               "site_name": site_name(settings, view), "locale": OG_LOCALE[view.lang], "image": image,
+               "image_alt": og_title or title},
         "jsonld": [{"@context": SCHEMA, **item} for item in jsonld if item],
     }
 

@@ -915,6 +915,22 @@ def test_og_text_and_cache(tmp_path):
     assert og._cached(tmp_path, "7", {"title": "b"}, lambda data: pytest.fail("已有就不再画")) == second
 
 
+def test_og_redesign_invalidates_public_urls_and_disk_cache(tmp_path, monkeypatch):
+    """价格与标题未变、只更新绘图模板时，也必须换 URL 并重新生成磁盘图片。"""
+    settings = load_settings({"SITE_URL": "https://radar.example"}, env_file=None)
+    view = web_view.for_lang(settings, "zh")
+    fields = og.site_fields(settings, view)
+    before_url = og.site_url(settings, view)
+    before_file = og._cached(tmp_path, "site", fields, lambda data: b"old layout")
+    monkeypatch.setattr(og, "RENDER_VERSION", "next-layout")
+    assert og.site_url(settings, view) != before_url
+    after_file = og._cached(tmp_path, "site", fields, lambda data: b"new layout")
+    assert after_file != before_file and not before_file.exists()
+    assert after_file.read_bytes() == b"new layout"
+    other = replace(settings, site_url="https://another.example")
+    assert og.site_url(other, view) != og.site_url(settings, view)
+
+
 # ---------------------------------------------------------------- 手动刷新（M2.11）
 
 

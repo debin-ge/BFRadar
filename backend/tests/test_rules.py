@@ -353,3 +353,26 @@ def test_numbered_plan_names_and_link_arrows():
     assert plans == [("#1", 9.9, Period.MONTH, None, None), ("#1", 53.5, Period.SEMI, None, None)]
     [hit] = price_hits("2 GB RAM — Order for £1.50/month → [3]", "en")
     assert hit.kind == "plain"  # 箭头后面是链接序号，不是 "$20 → $10" 的新价
+
+
+# ---------------------------------------------------------------- 合约期与续费价（D85）
+
+
+def test_term_and_renewal_from_a_table_row():
+    text = ("Plan | Specs | Price | Term\n"
+            "KVM 1 | 1 vCPU core, 4 GB RAM, 50 GB NVMe disk space | $6.49/mo | 24-month term, renews at $11.99/mo\n"
+            "KVM 2 | 2 vCPU cores, 8 GB RAM, 100 GB NVMe disk space | $8.79/mo | 24-month term, renews at $14.99/mo")
+    plans = extract("official", "Black Friday VPS", text, [], "Hostinger", "en", True).plans
+    assert [(p.name, p.price, p.period, p.term_months, p.renewal_price) for p in plans] == [
+        ("KVM 1", 6.49, Period.MONTH, 24, 11.99), ("KVM 2", 8.79, Period.MONTH, 24, 14.99)]
+
+
+@pytest.mark.parametrize("text, term, renewal", [
+    ("Starter VPS\n2 GB RAM\n40 GB SSD\n$3.99/mo for 36 months. Renews at $8.99/mo.", 36, 8.99),
+    ("Starter VPS\n2 GB RAM\n40 GB SSD\n$47.88/year, 2-year plan", 24, None),
+    ("Starter VPS\n2 GB RAM\n40 GB SSD\n$3.99/mo, renews at €8.99/mo", None, None),  # 币种不同不算续费价
+    ("Starter VPS\n2 GB RAM\n40 GB SSD\n$3.99/mo", None, None),
+])
+def test_term_and_renewal_in_a_block(text, term, renewal):
+    (plan,) = extract("lowendtalk", "VPS deal", text, [], None, "en", False).plans
+    assert (plan.term_months, plan.renewal_price) == (term, renewal)

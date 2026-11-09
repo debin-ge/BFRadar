@@ -47,6 +47,8 @@ export type PlanRow = {
   port: string;
   loc: string;
   price: string;
+  /** 合约期与续费价（D85），如"24 个月预付、续费 $11.99/月"；原文没写为空 */
+  term: string;
   cny: string;
   /** 套餐自带的优惠码（原样，页面加"码"字样与复制按钮） */
   code: string | null;

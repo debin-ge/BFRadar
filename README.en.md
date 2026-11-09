@@ -69,7 +69,8 @@ docker compose up -d --build           # then open http://127.0.0.1:3000/
 
 The crawler is written to these rules; keep them if you run your own instance, and take responsibility for it:
 
-- **Public feeds only.** Only public RSS / Atom, no login, no browser emulation. A Cloudflare challenge makes the request fail and is recorded — it is never bypassed.
+- **Public entry points only.** Public RSS / Atom and public, server-rendered pages that need no login (such as Telegram's channel preview at `t.me/s/…`); no login, no browser emulation. A Cloudflare challenge makes the request fail and is recorded — it is never bypassed.
+- **Credit the original post.** Records from relay channels (Telegram) use the LET / LES comment they cite as their source link and dedup key; affiliate parameters (`aff=` and the like) and `utm_` parameters are stripped from relayed links.
 - **Identify yourself.** User-Agent is `Mozilla/5.0 (compatible; BFRadar/0.1; +SITE_URL; CONTACT_EMAIL)`; fill in your own.
 - **Low frequency.** Default intervals are in `backend/.env.example`; `Retry-After` is honoured on 429 / 5xx.
 - **Excerpts, not republication.** Pages and API expose structured fields, LLM-written summaries and ≤ 300-character excerpts, each linking to the original post; community threads are kept as titles and links only. Full text stays in the local database for extraction and is never served, and authors' usernames are not shown.

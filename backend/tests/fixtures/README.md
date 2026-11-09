@@ -1,9 +1,15 @@
 # 抓取样本（fixtures）
 
-本目录下的 `lowendtalk_*`、`lowendspirit_*`、`lowendbox_*`、`reddit_*` 和 `nodeseek/` 是各来源 RSS 的原样快照，
+本目录下的 `lowendtalk_*`、`lowendspirit_*`、`lowendbox_*`、`reddit_*`、`nodeseek/`、`telegram/`、`official/` 和 `forums/` 是各来源 RSS、
+频道页与官网活动页的原样快照，
 内容是第三方用户和站点的帖子原文，版权归原作者与原站所有，**不随仓库发布**（已写进 `.gitignore`）。
 
-只有 `fx_*.json`（欧洲央行与 open.er-api 的汇率接口响应）随仓库提供。
+只有 `fx_*.json`（欧洲央行与 open.er-api 的汇率接口响应）和项目自己写的 `empty_feed.xml`、`telegram_empty.html`
+（新入口在 11-02 快照里没有对应文件时返回的空 feed 与空频道页）随仓库提供。
+
+`telegram/` 是 Telegram 频道 @VPS_spiders 的网页预览：`vps_spiders_before_{id}.html` 为 2025 年黑五窗口
+（消息 26150–26622）按 `?before=` 翻页的各页，供回放测试（D81）。`official/` 是 Hostinger 两个黑五页（D84），
+`forums/` 是 V2EX、NodeLoc、HostingDiscussion 11-08 的 feed（D88）。
 
 ## 没有样本时
 

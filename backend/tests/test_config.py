@@ -24,7 +24,11 @@ def test_defaults():
     (date(2026, 11, 24), "nodeseek", 3),   # 黑五周首日（含）
     (date(2026, 12, 1), "lowendtalk", 30),  # 黑五周末日（含）
     (date(2026, 12, 2), "lowendtalk", 60),
-    (date(2026, 11, 27), "reddit", 60),
+    (date(2026, 11, 27), "reddit", 10),  # D83：三个入口轮转
+    (date(2026, 11, 20), "reddit", 20),
+    (date(2026, 11, 27), "telegram", 10),
+    (date(2026, 11, 20), "v2ex", 60),  # D88
+    (date(2026, 11, 27), "hostingdiscussion", 30),
 ])
 def test_bf_week_intervals(day, source, minutes):
     assert settings().interval(source, day) == minutes

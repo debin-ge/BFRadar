@@ -66,6 +66,27 @@ def test_title_block_without_order_link():
     assert segs[0].lines[0] == "Included 1313 plans:" and segs[0].lines[-1] == "Price: $123 triennially"
 
 
+TEMPLATE = ["CPU: 4 vCPU Intel Xeon E3-1280-V3", "Memory: 16 GB", "Disk: 120 GB SSD", "PortSpeed: 1 Gbps",
+            "Location: EU (The Hague, Netherlands; Frankfurt, Germany; Timișoara, București, Constanța, Romania), "
+            "US (Silicon Valley, CA; Phoenix, AZ; Dallas, TX), JP (Tokyo)", "Price: 99 EUR/year"]
+
+
+def test_template_title_with_several_spec_words():
+    """MegaThread 模板：标题自身带多个规格词，其后紧跟字段行时也算套餐标题；很长的 Location 字段行不算段落。"""
+    segs = segment("\n".join(["Dedicated Server SM-E3-1280-V3-16GB-120GB", *TEMPLATE]), [])
+    assert len(segs) == 1 and segs[0].anchor == "title"
+    assert segs[0].lines[0].startswith("Dedicated Server") and segs[0].lines[-1] == "Price: 99 EUR/year"
+    segs = segment("\n".join(["Advanced KVM", *TEMPLATE, "Order Here [1]"]),
+                   links(("Order Here", "https://rarecloud.io/clients/index.php?rp=/store/kvm")))
+    assert len(segs) == 1 and segs[0].lines[0] == "Advanced KVM"  # 下单链接向上收过长 Location 行
+
+
+def test_field_block_without_title():
+    segs = segment("\n".join(TEMPLATE), [])
+    assert len(segs) == 1 and segs[0].anchor == "field" and len(segs[0].lines) == len(TEMPLATE)
+    assert all(s.anchor != "field" for s in segment("CPU: 1 vCPU\nPrice: $3/mo", []))  # 不足三行不成块
+
+
 def test_spec_lines_list_items_and_prose():
     text = "- Starter, 5GB: £1/mo, billed annually. £8.28/year with HALLOWEEN31\nGrab their 100GB plan for just $8.70/mo!"
     segs = segment(text, [])

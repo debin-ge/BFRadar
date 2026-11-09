@@ -154,12 +154,20 @@ HOST_ALIASES = {
     "old.reddit.com": "www.reddit.com",
     "new.reddit.com": "www.reddit.com",
     "www.lowendbox.com": "lowendbox.com",
+    "v2ex.com": "www.v2ex.com",
+    "nodeloc.com": "www.nodeloc.com",
+    "www.hostingdiscussion.com": "hostingdiscussion.com",
 }
-HTTPS_HOSTS = {"lowendtalk.com", "lowendspirit.com", "www.nodeseek.com", "www.reddit.com", "lowendbox.com"}
+HTTPS_HOSTS = {"lowendtalk.com", "lowendspirit.com", "www.nodeseek.com", "www.reddit.com", "lowendbox.com", "www.v2ex.com",
+               "www.nodeloc.com", "hostingdiscussion.com"}
 PATH_RULES = (  # (主机, 路径模式, 规范路径)
+    (("lowendtalk.com", "lowendspirit.com"), re.compile(r"/discussion/comment/(\d+)(?:/.*)?"), "/discussion/comment/{}"),
     (("lowendtalk.com", "lowendspirit.com"), re.compile(r"/discussion/(\d+)(?:/.*)?"), "/discussion/{}"),
     (("www.reddit.com",), re.compile(r"((?:/r/[^/]+)?/comments/[a-z0-9]+)(?:/.*)?", re.I), "{}"),
     (("www.nodeseek.com",), re.compile(r"/post-(\d+)-\d+/?"), "/post-{}-1"),
+    (("www.v2ex.com",), re.compile(r"/t/(\d+)(?:/.*)?"), "/t/{}"),
+    (("www.nodeloc.com",), re.compile(r"/t/[^/]+/(\d+)(?:/\d+)?/?"), "/t/topic/{}"),
+    (("hostingdiscussion.com",), re.compile(r"/threads/(?:[^/]*\.)?(\d+)(?:/.*)?"), "/threads/{}/"),
 )
 
 

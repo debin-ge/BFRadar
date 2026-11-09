@@ -1,7 +1,8 @@
-"""端到端测试共用的现场：main.py serve 起真的 uvicorn → 调度器启动后自动采集六个源 → LLM 队列跑完（M2.13）；
+"""端到端测试共用的现场：main.py serve 起真的 uvicorn → 调度器启动后自动采集各源 → LLM 队列跑完（M2.13）；
 需要时再起已构建的前端（node frontend/server.js，生产模式），接到这个后端上（D60）。
 
-网站走真实 HTTP（随机端口）；采集与 LLM 的请求走 MockTransport：六个源与汇率用 tests/fixtures 的真实快照，
+网站走真实 HTTP（随机端口）；采集与 LLM 的请求走 MockTransport：各源与汇率用 tests/fixtures 的真实快照
+（D81、D82 新增的入口没有快照，返回空 feed 与空频道页），
 LLM 是假的 OpenAI 兼容接口，只回中文标题与摘要（其余留空，合并时沿用规则结果，D45）。为了几秒内跑完，
 把调度器的启动延迟与 LLM 轮询间隔调短；其余全按 serve 的默认配置。
 """
@@ -38,7 +39,8 @@ TOKEN = "e2e-token"
 SITE = "https://bfradar.test"
 CONTACT = "ops@bfradar.test"
 TODAY = "2026-11-03"  # 固定"今天"，免得夹具里优惠的截止日期过去后测试结果变化（O-15）
-SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek", "reddit")
+SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "telegram", "official", "nodeseek", "reddit", "v2ex", "nodeloc",
+           "hostingdiscussion")  # 与状态页的顺序一致
 LLM_ENV = {"LLM_BASE_URL": "https://llm.e2e.test/v1", "LLM_API_KEY": "sk-e2e", "LLM_MODEL": "e2e-model"}
 SUMMARY = "端到端测试摘要"
 PAGE_BUDGET = 150 * 1024  # 第 9 节：页面体积 ≤ 150 KB

@@ -124,6 +124,15 @@ class View:
     def plan_price(self, p: Plan) -> str:
         return format_price(p.price, p.currency, p.period, self.lang) if p.price is not None else ""
 
+    def plan_term(self, p: Plan) -> str:
+        """合约期与续费价（D85）："24 个月预付 · 续费 $11.99/月"。"""
+        parts = []
+        if p.term_months:
+            parts.append(self.t("plan.term", n=p.term_months))
+        if p.renewal_price is not None and p.renewal_price != p.price:
+            parts.append(self.t("plan.renews", price=format_price(p.renewal_price, p.currency, p.period, self.lang)))
+        return self.join(parts) if parts else ""
+
     def plan_cny(self, p: Plan) -> str:
         if p.price_cny_year is None or p.currency == "CNY" or p.price == 0:
             return ""

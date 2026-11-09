@@ -20,7 +20,33 @@ ROUTES = {
        for slug, name in LES.items()},
     "https://lowendbox.com/feed/": "lowendbox_feed_2026-11-02.xml",
     "https://rss.nodeseek.com/": "nodeseek/nodeseek_2026-11-02T1522Z.xml",
-    "https://www.reddit.com/r/VPS+webhosting/new/.rss?limit=50": "reddit_multi_2026-11-02.xml",
+    # 11-02 的快照是 r/VPS+webhosting 50 条；D83 起社区入口合并了更多版块、每页 100 条，测试照旧用这份快照
+    "https://www.reddit.com/r/VPS+webhosting+hetzner+Hosting+HostingReport+SelfHosting/new/.rss?limit=100":
+        "reddit_multi_2026-11-02.xml",
+}
+# D81、D82 新增的入口没有 11-02 的快照：返回空 feed / 空频道页（随仓库提供），各源的条数与断言照旧
+EXTRA_ROUTES = {
+    "https://lowendtalk.com/categories/offers/p2/feed.rss": "empty_feed.xml",
+    "https://lowendtalk.com/discussions/feed.rss": "empty_feed.xml",
+    "https://lowendspirit.com/discussions/feed.rss": "empty_feed.xml",
+    "https://lowendbox.com/tag/black-friday/feed/": "empty_feed.xml",
+    "https://t.me/s/VPS_spiders": "telegram_empty.html",
+    # 官网活动页（D84）：返回一个不是黑五页的空页面，该源本轮收 0 条
+    "https://www.hostinger.com/black-friday-vps-deals": "telegram_empty.html",
+    "https://www.hostinger.com/black-friday-web-hosting-deals": "telegram_empty.html",
+    # V2EX、NodeLoc、HostingDiscussion（D88）
+    **{url: "empty_feed.xml" for url in (
+        "https://www.v2ex.com/feed/promotions.xml", "https://www.v2ex.com/feed/vps.xml",
+        "https://www.nodeloc.com/c/internet/vps/27.rss", "https://www.nodeloc.com/c/business/information/10.rss",
+        "https://www.nodeloc.com/c/business/deal-hunter/43.rss", "https://hostingdiscussion.com/forums/-/index.rss",
+    )},
+    **{url: "empty_feed.xml" for url in (  # Reddit 官方版块与全站搜索（D83），按轮转在第 2、3 轮抓
+        "https://www.reddit.com/r/Hostinger+CloudwaysbyDO+SiteGroundOfficial+OVHcloud+digital_ocean+Contabo+RackNerd"
+        "+netcup+vultr+linode+Ionos+Namecheap+LightNodeVPS+hostney/new/.rss?limit=100",
+        "https://www.reddit.com/search.rss?q=title%3A%28%22black+friday%22+OR+%22cyber+monday%22+OR+BFCM%29+%28vps+OR"
+        "+vds+OR+hosting+OR+%22dedicated+server%22+OR+seedbox+OR+%22bare+metal%22%29+NOT+subreddit%3APromoCodesDaily+NOT"
+        "+subreddit%3Acouponcodes+NOT+subreddit%3ACouponCodeBD+NOT+subreddit%3ALowestPriceDeals&sort=new&t=month&limit=100",
+    )},
 }
 
 
@@ -83,8 +109,8 @@ class FixtureServer:
         if url in self.overrides:
             value = self.overrides[url]
             return httpx.Response(value) if isinstance(value, int) else httpx.Response(200, content=value)
-        if url in ROUTES:
-            return httpx.Response(200, content=(FIXTURES / ROUTES[url]).read_bytes())
+        if url in ROUTES or url in EXTRA_ROUTES:
+            return httpx.Response(200, content=(FIXTURES / (ROUTES.get(url) or EXTRA_ROUTES[url])).read_bytes())
         return httpx.Response(404)
 
 

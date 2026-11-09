@@ -177,6 +177,7 @@ function PlanRows({ rows, t }: { rows: PlansPage["rows"]; t: T }) {
               </td>
               <td data-c="price">
                 <b>{r.price}</b>
+                {r.term && <small className="term">{r.term}</small>}
                 {r.code && <CopyCode code={r.code} t={t} />}
               </td>
               <td data-c="cny" data-l={t("plan.cny")}>

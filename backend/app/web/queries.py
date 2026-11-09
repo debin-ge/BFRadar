@@ -20,7 +20,7 @@ from ..repo import latest_runs, load_deal, plan_from_row
 
 SCOPES = ("bf", "promo", "all")
 SORTS = ("newest", "price", "discount", "changed")
-OFFER_SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek")  # 会产出优惠的一手源
+OFFER_SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "telegram", "official", "nodeseek", "reddit")  # 会产出优惠的源
 PRODUCTS = tuple(p.value for p in ProductType)
 PAGE_SIZE = 30  # 页面体积 ≤ 150 KB（第 9 节）：每条优惠带前 PLAN_PREVIEW 个套餐
 PLAN_PREVIEW = 10

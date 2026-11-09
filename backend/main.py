@@ -62,7 +62,7 @@ def cmd_crawl(settings: Settings, args: argparse.Namespace) -> int:
     with HttpClient(settings) as http:
         run_id, reports = crawl(db, build_sources(settings, http, args.source), reason="cli")
     print(f"\n运行 #{run_id}")
-    print(f"{'源':<14}{'抓取':>5}{'新增':>5}{'更新':>5}  {'新分类 优惠/情报/无关':<14}  {'优惠 新/改/变更':<12} {'情报+':>4}  备注")
+    print(f"{'源':<18}{'抓取':>5}{'新增':>5}{'更新':>5}  {'新分类 优惠/情报/无关':<14}  {'优惠 新/改/变更':<12} {'情报+':>4}  备注")
     for r in reports:
         note = r.error or ", ".join(f"{k}={v}" for k, v in r.stats.items() if k != "errors")
         if r.stats.get("errors"):
@@ -71,7 +71,7 @@ def cmd_crawl(settings: Settings, args: argparse.Namespace) -> int:
             note += f"；{len(r.post_errors)} 条处理出错"
         kinds = "/".join(str(r.kinds.get(k, 0)) for k in ("offer", "intel", "ignore")) if r.kinds else "-"
         deals = "/".join(str(r.deals.get(k, 0)) for k in ("created", "updated", "changes"))
-        print(f"{r.source:<14}{r.fetched:>5}{len(r.new):>5}{len(r.updated):>5}  {kinds:<14}  {deals:<12} "
+        print(f"{r.source:<18}{r.fetched:>5}{len(r.new):>5}{len(r.updated):>5}  {kinds:<14}  {deals:<12} "
               f"{r.intel:>4}  {note}")
     if not settings.llm_enabled:
         print("\nLLM 未配置：规则模式")
@@ -213,9 +213,9 @@ def cmd_stats(settings: Settings, args: argparse.Namespace) -> int:
     fx = s["fx"]
     print(f"汇率：{fx['provider']} {fx['date']}（拉取于 {fx['fetched_at']}）" if fx else "汇率：库里没有，使用内置表")
     print("原文：" + "，".join(f"{k} {v}" for k, v in s["raw"].items()))
-    print(f"\n{'源':<14}{'最近一轮':<22}{'最近成功':<22}{'连续失败':>8}{'抓取':>6}{'新增':>6}")
+    print(f"\n{'源':<18}{'最近一轮':<22}{'最近成功':<22}{'连续失败':>8}{'抓取':>6}{'新增':>6}")
     for source, r in sorted(s["runs"].items()):
-        print(f"{source:<14}{r['last_at']:<22}{(r['last_ok_at'] or '-'):<22}{r['failing']:>8}{r['fetched']:>6}"
+        print(f"{source:<18}{r['last_at']:<22}{(r['last_ok_at'] or '-'):<22}{r['failing']:>8}{r['fetched']:>6}"
               f"{r['new']:>6}")
     return 0
 

@@ -21,7 +21,7 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 import main
-from app.config import load_settings
+from app.config import SOURCE_IDS, load_settings
 from app.db import Database, connect
 from app.http import HttpClient
 from app.i18n import strings
@@ -240,7 +240,7 @@ def test_dictionary_covers_code_and_enums(lang):
              ("scope.", ("bf", "promo", "all")),
              ("sort.", ("newest", "price", "discount", "changed")),
              ("flag.", ("price_drop", "new_code")),
-             ("source.", ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek", "reddit", "llm")),
+             ("source.", (*SOURCE_IDS, "llm")),
              ("plans.sort.", PLAN_SORTS), ("period.", PERIODS), ("change.", CHANGE_FIELDS),
              ("tier.", ("normal", "bf")), ("lang.", ("zh", "en")),
              ("countdown.title.", ("before", "during", "after")), ("countdown.when.", ("before", "during")),
@@ -607,7 +607,7 @@ HOME_KEYS = {"seo", "stats", "just", "scopes", "form", "total", "deals", "pager"
 CARD_KEYS = {"id", "href", "bf", "event", "vendor", "vendor_href", "heat", "heat_title", "title", "same", "same_href",
              "flags", "offer", "specs", "codes", "codes_more", "price", "date", "published_at", "expand", "plans",
              "cols", "plans_more", "excerpt", "expiry", "net"}
-PLAN_KEYS = {"name", "ip", "net", "cpu", "ram", "disk", "bw", "port", "loc", "price", "cny", "code", "order"}
+PLAN_KEYS = {"name", "ip", "net", "cpu", "ram", "disk", "bw", "port", "loc", "price", "term", "cny", "code", "order"}
 HIDDEN_KEYS = {"source", "sources", "evidence", "seen_at", "stock", "stock_key", "stock_source", "stock_evidence",
                "stock_status", "dim", "in_stock", "include_sold_out"}  # 页面不显示来源（D59），库存不再收集（D63）
 

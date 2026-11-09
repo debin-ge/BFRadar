@@ -36,6 +36,7 @@ function Cell({ p, col, t }: { p: PlanRow; col: PlanCol; t: T }) {
       return (
         <td data-c="price">
           <b>{p.price}</b>
+          {p.term && <small className="term">{p.term}</small>}
           {p.code && <CopyCode code={p.code} t={t} />}
         </td>
       );

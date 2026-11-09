@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>empty</title><link>https://example.com/</link><description>测试用的空 feed：没有快照的入口返回它，原有断言不受新入口影响</description></channel></rss>

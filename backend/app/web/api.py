@@ -61,6 +61,7 @@ def plan_json(p: Plan) -> dict:
         "disk_type": p.disk_type, "bandwidth_tb": p.bandwidth_tb, "port_gbps": p.port_gbps, "net": p.net,
         "locations": p.locations, "price": p.price, "currency": p.currency, "period": p.period,
         "price_note": p.price_note, "price_cny_year": p.price_cny_year, "coupon_code": p.coupon_code,
+        "term_months": p.term_months, "renewal_price": p.renewal_price,
         "order_url": p.order_url,
     }
 

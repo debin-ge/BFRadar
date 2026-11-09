@@ -34,7 +34,9 @@ HSTS = "max-age=31536000"
 FORWARDED = ("/api/deals?page_size=1", "/api/openapi.json", "/feed.xml", "/en/feed.xml?scope=all", "/sitemap.xml",
              "/robots.txt", "/og/zh/site.png", "/healthz")
 TIMED = ("/healthz",)
-LABELS = {"lowendtalk": "LET", "lowendspirit": "LES", "lowendbox": "LEB", "nodeseek": "NodeSeek", "reddit": "Reddit"}
+LABELS = {"lowendtalk": "LET", "lowendspirit": "LES", "lowendbox": "LEB", "telegram": "Telegram", "official": "官网活动页",
+          "nodeseek": "NodeSeek", "reddit": "Reddit", "v2ex": "V2EX", "nodeloc": "NodeLoc",
+          "hostingdiscussion": "HostingDiscussion"}
 VM6 = "https://lowendtalk.com/discussion/222765"
 
 

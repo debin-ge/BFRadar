@@ -544,6 +544,7 @@ CODE_STOP = {"OFF", "BLACK", "FRIDAY", "VPS", "HTTPS", "HTTP", "NVME", "SSD", "H
 LANDING = re.compile(r"black-?friday|blackfriday|cyber|promo|promotion|deals?\b|sale|special|offer|campaign|halloween|"
                      r"christmas|birthday|anniversary|lowendtalk|\blet\b", re.I)
 NOT_MERCHANT = re.compile(r"//(?:[\w-]+\.)*(?:lowendtalk\.com|lowendspirit\.com|lowendbox\.com|nodeseek\.com|reddit\.com|"
+                          r"v2ex\.com|nodeloc\.com|hostingdiscussion\.com|"
                           r"facebook\.com|twitter\.com|x\.com|t\.me|discord\.gg|discord\.com|linkedin\.com|github\.com|"
                           r"youtube\.com|instagram\.com|tumblr\.com|trustpilot\.com|geekbench\.com|wikipedia\.org|"
                           r"getrewardful\.com|imgur\.com)(?:[/:?#]|$)|/aff\b|aff\.php|affiliate|^mailto:|^denied:", re.I)
@@ -597,7 +598,7 @@ def extract_vendor(title: str, text: str, links: list[Link], author: str | None,
             cand = " ".join(cand.split()[:-1])
         if cand and not GENERIC_TITLE_WORDS.match(cand) and len(cand.split()) <= 3:
             return cand
-    if source in ("lowendtalk", "lowendspirit") and author:
+    if source in ("lowendtalk", "lowendspirit", "telegram", "official") and author:  # Telegram 转发的 author 是频道的商家标签，官网页是品牌名
         return author
     return None
 
@@ -763,6 +764,34 @@ def _plan_net(seg: Segment, cfg: Config, lines: list[str], defaults: Config, tit
     return list(defaults.net) or list(title_net)
 
 
+# 合约期与续费价（D85）："24-month term"、"for 48 months"、"3-year plan"；"Renews at $11.99/mo"
+TERM_RX = re.compile(r"\b(\d{1,3})[- ]?months?\s+(?:term|plan|commitment|contract|billing)\b|\bfor\s+(\d{1,3})\s+months\b|"
+                     r"\b(\d)[- ]?years?\s+(?:term|plan|commitment|contract)\b", re.I)
+RENEW_BEFORE = re.compile(r"renews?\s+at\W{0,3}$|renewal(?:\s+price)?\W{0,3}$|续费价?\W{0,3}$", re.I)
+
+
+def plan_term(lines: list[str]) -> int | None:
+    for line in lines:
+        if m := TERM_RX.search(line):
+            months = int(m.group(1) or m.group(2)) if (m.group(1) or m.group(2)) else int(m.group(3)) * 12
+            if 1 <= months <= 120:
+                return months
+    return None
+
+
+def renewal_for(hit: "PriceHit", hits: list["PriceHit"], single: bool) -> float | None:
+    """写明的续费价，与该价格同币种、同周期（或续费没写周期）才算。先找同一行的；块里只有这一个价格时才看别的行。"""
+    for same_line in (True, False):
+        if not same_line and not single:
+            break
+        for h in hits:
+            if ((h.line == hit.line) == same_line and h.kind == "regular"
+                    and RENEW_BEFORE.search(h.line[max(0, h.start - 25):h.start])
+                    and h.currency == hit.currency and h.period in (None, hit.period) and h.amount >= hit.amount):
+                return h.amount
+    return None
+
+
 def extract_plans(text: str, links: list[Link], segs: list[Segment], lang: str, codes: list[str],
                   storage_like: bool = False, free_ok: bool = False, title_net: list[str] = ()) -> list[Plan]:
     lines = text.splitlines()
@@ -812,6 +841,7 @@ def extract_plans(text: str, links: list[Link], segs: list[Segment], lang: str, 
             if not cfg.locations and defaults.locations:
                 cfg.locations = defaults.locations
             regular = [h for h in hits if h.kind == "regular"]
+            term = plan_term(seg.lines)
             for h in selected:
                 disk = cfg.disk_gb
                 if storage_like and (own := line_size(LINK_REF.sub("", h.line))):
@@ -825,6 +855,7 @@ def extract_plans(text: str, links: list[Link], segs: list[Segment], lang: str, 
                                 else PriceNote.PROMO if h.kind == "promo" or regular else None),
                     order_url=_order_url(seg, h, links), coupon_code=_plan_code(seg, h, links, codes),
                     notes="unmetered" if cfg.unmetered else None,
+                    term_months=term, renewal_price=renewal_for(h, hits, len(selected) == 1),
                 ))
     unique: list[Plan] = []  # 同一套餐在正文里写了两遍
     seen: set = set()

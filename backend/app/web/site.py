@@ -8,8 +8,9 @@ from . import fmt
 from .queries import last_update
 from .view import View
 
-STATUS_SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek", "reddit")
-OFFER_JOBS = tuple(f"source:{s}" for s in ("lowendtalk", "lowendspirit", "lowendbox"))
+STATUS_SOURCES = ("lowendtalk", "lowendspirit", "lowendbox", "telegram", "official", "nodeseek", "reddit", "v2ex",
+                  "nodeloc", "hostingdiscussion")
+OFFER_JOBS = tuple(f"source:{s}" for s in ("lowendtalk", "lowendspirit", "lowendbox", "telegram", "official"))
 
 
 def next_crawl(scheduler) -> str | None:

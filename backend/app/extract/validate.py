@@ -261,6 +261,11 @@ def validate_and_merge(data: dict, *, title: str, text: str, links: list[Link], 
         p.position = i
         if plans_from == "llm" and not p.net:
             p.net = list(title_net)
+        if plans_from == "llm":  # 合约期与续费价只有规则层抽（D85）：同价同币种同周期的规则套餐有就沿用
+            same = next((r for r in rules.plans if (r.price, r.currency, r.period) == (p.price, p.currency, p.period)
+                         and (r.term_months or r.renewal_price is not None)), None)
+            if same:
+                p.term_months, p.renewal_price = same.term_months, same.renewal_price
 
     # ---- 截止日期：LLM 给的必须是原文出现过的日期（相对写法按发布时间推算后也算），否则用规则层的
     ends, ends_source = rules.ends_at, "rule" if rules.ends_at else None

@@ -14,18 +14,30 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_IDS = ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek", "reddit")
+SOURCE_IDS = ("lowendtalk", "lowendspirit", "lowendbox", "nodeseek", "reddit", "telegram", "official", "v2ex", "nodeloc",
+              "hostingdiscussion")
 # 第 13 节与 D24：（常态，黑五周）采集间隔，单位分钟
 DEFAULT_INTERVALS = {
     "lowendtalk": (60, 30),
     "lowendspirit": (60, 60),
     "lowendbox": (60, 60),
     "nodeseek": (5, 3),
-    "reddit": (60, 60),
+    "reddit": (20, 10),  # D83：三个入口轮流抓，每轮一个请求
+    "telegram": (30, 10),  # D81：黑五高峰约 180 条/天
+    "official": (240, 120),  # D84：主流品牌官网活动页，每页几百 KB，改价不频繁
+    "v2ex": (60, 30),  # D88：小社区情报，窗口 50 条约 3 天到 3 周
+    "nodeloc": (60, 30),
+    "hostingdiscussion": (60, 30),
 }
 LES_CATEGORIES = (
     "offers", "vps", "dedicated-server", "shared-hosting", "services", "free-offers-and-stuff", "must-see-deals-",
 )  # D36
+# D83：Reddit 社区版块（合并成一个请求）与主流品牌官方版块（官方账号在这里发的促销帖算优惠）
+REDDIT_SUBREDDITS = ("VPS", "webhosting", "hetzner", "Hosting", "HostingReport", "SelfHosting")
+REDDIT_VENDOR_SUBREDDITS = (
+    "Hostinger", "CloudwaysbyDO", "SiteGroundOfficial", "OVHcloud", "digital_ocean", "Contabo", "RackNerd", "netcup",
+    "vultr", "linode", "Ionos", "Namecheap", "LightNodeVPS", "hostney",
+)
 FX_PROVIDERS = ("ecb", "erapi", "static")
 SECRET_FIELDS = {"refresh_token", "llm_api_key", "cf_api_token"}
 
@@ -51,7 +63,7 @@ class Settings:
     bf_week_end: date = date(2026, 12, 1)
     season_start: date = date(2026, 10, 1)
     today: date | None = None  # 固定"今天"（测试与演示用）：判断活动是否结束、还剩几天都以它为准；空为真实日期（TODAY）
-    reddit_subreddits: tuple[str, ...] = ("VPS", "webhosting")
+    reddit_subreddits: tuple[str, ...] = REDDIT_SUBREDDITS
     les_categories: tuple[str, ...] = LES_CATEGORIES
     refresh_token: str = ""
     llm_base_url: str = ""

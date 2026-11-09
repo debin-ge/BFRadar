@@ -5,6 +5,7 @@
      同组内无价格的表头与共用配置行作为上下文。
   2. 下单链接：以下单链接所在行为块尾，向上收到套餐标题行、空行、长段落或上一个块为止。
   3. 套餐标题行：短行且其后紧跟至少两行规格（"UK EPYC E4"、"Budget VPS 1"），收到下一个标题行为止。
+  3b. 字段块：没有标题、连续三行以上的模板字段行（"CPU: …"、"Memory: …"、"Price: …"）自成一块。
   4. 兜底（规范外补充）：同时有价格与规格的单行，如列表项 "Starter, 5GB: £1/mo" 或段落句子。
 不含价格的块丢弃；块外的孤立价格只进帖子级价格列表。只有价格、缺少规格的块从紧邻的上一块继承规格作为上下文。
 标题写明送免费主机 / VPS 时（free_ok），块里写着免费产品（"Free NVMe Shared Hosting"）也算有价格，记为 0 价（D55）。
@@ -22,6 +23,10 @@ ROW_SEP = re.compile(r"\||·|│")
 LINK_REF = re.compile(r"\[(\d+)\]")
 LIST_ITEM = re.compile(r"^\s*-\s")
 KEY_VALUE = re.compile(r"^[A-Za-z][\w /&+.-]{0,24}:\s*\S")  # "RAM: 13GB"、"Price: $123" 这类字段行
+# 套餐模板的字段名（LET MegaThread 模板与 Telegram 转发）：这些字段行再长也是配置，不当段落
+FIELD_KEY = re.compile(r"^\s*(?:CPU|vCPU|Cores?|Memory|RAM|Disk|Storage|Traffic|Bandwidth|Transfer|Port ?Speed|Port|"
+                       r"Network|Locations?|Datacenters?|IPv4|IPv6|Virtuali[sz]ation|Additional|Features?|Coupon|Price)"
+                       r"\s*:\s*\S", re.I)
 BOILERPLATE = re.compile(r"^The post .* appeared first on ")  # LEB 文末固定句，会重复标题里的价格
 SPEC = re.compile(
     r"\d+(?:\.\d+)?\s?(?:[GMT]B|[GMT]iB|GHz|[GM]bps|[GM]bit|G\b|T\b)|vCPU|vCore|\bcores?\b|\bCPU\b|\bRAM\b|memory|"
@@ -97,6 +102,8 @@ def header_score(parts: list[str]) -> float:
 def _is_prose(line: str) -> bool:
     """段落句子：很长且规格词少；或较长、以句末标点结尾、没有规格词也没有价格。块不跨过这类行。"""
     stripped = line.strip()
+    if FIELD_KEY.match(stripped):
+        return False
     if len(stripped) > PROSE_LEN and len(SPEC.findall(stripped)) < 2:
         return True
     return (len(stripped) > TITLE_LEN and stripped[-1:] in ".!?。！？)" and not SPEC.search(stripped)
@@ -104,12 +111,17 @@ def _is_prose(line: str) -> bool:
 
 
 def is_title(lines: list[str], k: int) -> bool:
-    """短行、不是列表项或"字段: 值"行、自身最多一个规格词（"4GB Budget VPS"），且其后 3 行内至少两行是规格行。"""
+    """短行、不是列表项或"字段: 值"行、自身最多一个规格词（"4GB Budget VPS"），且其后 3 行内至少两行是规格行。
+
+    其后紧跟的 3 行都是模板字段行（"CPU: …"、"Memory: …"）时，标题自身带多个规格词也算
+    （"Dedicated Server SM-E3-1280-V3-16GB-120GB"）。
+    """
     line = lines[k].strip()
-    if (not line or len(line) > TITLE_LEN or LIST_ITEM.match(line) or KEY_VALUE.match(line)
-            or len(SPEC.findall(line)) > 1 or _is_row(line)):
+    if not line or len(line) > TITLE_LEN or LIST_ITEM.match(line) or KEY_VALUE.match(line) or _is_row(line):
         return False
     following = [x for x in lines[k + 1:k + 4] if x.strip()]
+    if len(SPEC.findall(line)) > 1:
+        return len(following) == 3 and all(FIELD_KEY.match(x) for x in following)
     return sum(bool(SPEC.search(x)) and not kw.PRICE.search(x) for x in following) >= 2
 
 
@@ -137,6 +149,7 @@ def segment(text: str, links: list[Link], free_ok: bool = False) -> list[Segment
     segs = _rows(lines, used)
     segs += _order_blocks(lines, used, links)
     segs += _title_blocks(lines, used)
+    segs += _field_blocks(lines, used)
     segs += _spec_lines(lines, used)
     segs = sorted((s for s in segs if any(has_plan_price(x) for x in s.lines) or (free_ok and is_free_plan(s))),
                   key=lambda s: s.start)
@@ -221,6 +234,21 @@ def _title_blocks(lines: list[str], used: list[bool]) -> list[Segment]:
         for x in range(k, end + 1):
             used[x] = True
         k = end + 1
+    return segs
+
+
+def _field_blocks(lines: list[str], used: list[bool]) -> list[Segment]:
+    segs: list[Segment] = []
+    k, n = 0, len(lines)
+    while k < n:
+        end = k
+        while end < n and not used[end] and FIELD_KEY.match(lines[end]):
+            end += 1
+        if end - k >= 3:
+            segs.append(Segment("field", k, end - 1, lines[k:end]))
+            for x in range(k, end):
+                used[x] = True
+        k = max(end, k + 1)
     return segs
 
 

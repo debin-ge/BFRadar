@@ -135,6 +135,58 @@ def test_reddit(title, text, kind, category):
     assert c.record_kind is kind and c.intel_category == category
 
 
+@pytest.mark.parametrize("source, cats, title, kind, category", [
+    ("lowendtalk", ["Offers"], "Any title", RecordKind.OFFER, None),
+    ("lowendtalk", ["Shared Hosting Offers"], "cPanel hosting $10/yr", RecordKind.OFFER, None),
+    ("lowendtalk", ["Giveaways & Freebies"], "Free VPS giveaway", RecordKind.OFFER, None),
+    ("lowendtalk", [], "Old post without category", RecordKind.OFFER, None),
+    ("lowendtalk", ["Requests"], "Looking for a cheap VPS in Asia", RecordKind.INTEL, IntelCategory.QUESTION),
+    ("lowendtalk", ["General"], "Which VPS did you buy this Black Friday", RecordKind.INTEL, IntelCategory.QUESTION),
+    ("lowendtalk", ["General"], "Hetzner raises VPS prices", RecordKind.INTEL, IntelCategory.DISCUSSION),
+    ("lowendtalk", ["News"], "Provider X acquired, VPS customers migrated", RecordKind.INTEL, IntelCategory.NEWS),
+    ("lowendtalk", ["General"], "Happy birthday to me", RecordKind.IGNORE, None),
+    ("lowendspirit", ["Dedicated servers"], "E3 box", RecordKind.OFFER, None),
+    ("lowendspirit", ["Technical"], "Debian 13 on my VPS fails to boot", RecordKind.INTEL, IntelCategory.DISCUSSION),
+])
+def test_forum_discussions_feed_categories(source, cats, title, kind, category):
+    """LET / LES 全站讨论 feed（D82）：Offers 各分类是优惠，其他分类只有情报与无关。"""
+    c = classify(source, title, "VPS: 1 GB RAM, $10/yr" if kind is RecordKind.OFFER else "", cats)
+    assert c.record_kind is kind and c.intel_category == category
+
+
+@pytest.mark.parametrize("cats, author, title, kind", [
+    (["Hostinger"], "HostingerCOM", "Waiting for Hostinger Black Friday deals? Up to 82% off + extra 10% with BFREDDIT",
+     RecordKind.OFFER),
+    (["CloudwaysbyDO"], "PoojafromCloudways", "Our Black Friday offer is live: 40% off for 4 months", RecordKind.OFFER),
+    (["hostney"], "hostney", "Black Friday: 30% off every plan for up to 3 years", RecordKind.OFFER),
+    (["Hostinger"], "LukeToronto", "Black Friday hosting 80% off renewal?", RecordKind.INTEL),  # 用户帖
+    (["Hostinger"], "HostingerCOM", "From 9 sales to 800+, a website story", RecordKind.INTEL),  # 官方但不是促销
+    (["Hostinger"], "HostingerCOM", "Hostinger weekly update #51", RecordKind.INTEL),
+    (["Hostinger"], "HostingerCOM", "Do you still plan your holiday sales around Black Friday?", RecordKind.INTEL),
+    (["CloudwaysbyDO"], "PoojafromCloudways", "PHP2Shell Breakdown: critical PHP vulnerabilities", RecordKind.INTEL),
+    (["VPS"], "vultrfan", "Vultr VPS 50% off this week", RecordKind.INTEL),  # 不在官方版块
+])
+def test_reddit_official_vendor_posts_are_offers(cats, author, title, kind):
+    """D83：品牌官方账号在自家版块发的促销帖算优惠，其余 Reddit 帖照旧只有情报与无关。"""
+    text = "web hosting plans, 50% off with code SAVE50"  # 正文都带折扣与码：只看标题能不能区分
+    assert classify("reddit", title, text, cats, author).record_kind is kind
+
+
+TG_TEXT = "CPU: 1 vCPU\nMemory: 1 GB\nDisk: 15 GB NVMe\nCoupon: C0P3A4Q6OKWG\nPrice: $1.5 USD/monthly"
+
+
+def test_telegram_relay_is_an_offer_and_channel_tag_marks_black_friday():
+    """频道打的 #黑五 标签算黑五：模板正文往往不写 Black Friday（D81）。"""
+    c = classify("telegram", "Ryzen-KVM-1GB (India)", TG_TEXT, ["let", "黑五2025", "黑五"])
+    assert c.record_kind is RecordKind.OFFER and c.is_black_friday and c.event_type is EventType.BLACK_FRIDAY
+    assert c.evidence["black_friday"] == "频道标签"
+    cm = classify("telegram", "Cyber Monday VPS", TG_TEXT, ["let", "黑五"])
+    assert cm.is_black_friday and cm.event_type is EventType.CYBER_MONDAY  # 正文只写网一的仍是网一
+    plain = classify("telegram", "Ryzen-KVM-1GB (India)", TG_TEXT, ["let"])
+    assert plain.record_kind is RecordKind.OFFER and not plain.is_black_friday
+    assert not classify("reddit", "Ryzen VPS", TG_TEXT, ["黑五"]).is_black_friday  # 只认 Telegram 的标签
+
+
 # ---------------------------------------------------------------- 产品类型与语言
 
 
@@ -205,3 +257,23 @@ def test_hardware_sales_are_not_collected(title):
 def test_dedicated_server_sales_are_still_offers():
     c = classify("lowendtalk", "Black Friday dedicated server sale: Ryzen 9 from $59/mo", "Dedicated server $59/mo")
     assert c.record_kind is RecordKind.OFFER and ProductType.DEDICATED in c.product_types
+
+
+@pytest.mark.parametrize("source, cats, title, kind", [  # D88：综合推广 / 羊毛版块从严
+    ("v2ex", ["promotions"], "[中转站] 小众中转站推广，进来领鸡蛋 10$", "ignore"),
+    ("v2ex", ["promotions"], "腾讯云服务器拼团", "intel"),
+    ("v2ex", ["promotions"], "黑五 绿云 年付特价", "ignore"),  # 正文没有产品词
+    ("nodeloc", ["羊毛党"], "白嫖4h8g服务器【简单上手】", "intel"),
+    ("nodeloc", ["优惠情报"], "【羊毛】购买香港流量esim，可用积分免费兑换机票", "ignore"),
+    ("nodeloc", ["优惠情报"], "绿云黑五活动开始", "intel"),  # 标题黑五词 + 正文产品词
+    ("nodeloc", ["VPS"], "Skywolf 的线路有惊喜啊", "intel"),  # VPS 分类照通用规则
+    ("v2ex", ["vps"], "咸鱼云", "ignore"),
+])
+def test_small_forum_general_boards(source, cats, title, kind):
+    text = "三网 CN2 年付 $30 的小鸡" if "黑五" in title and source == "nodeloc" else ""
+    assert classify(source, title, text, cats).record_kind == kind
+
+
+def test_hostingdiscussion_forum_categories():
+    c = classify("hostingdiscussion", "Hosting Industry roundup: new datacenter", "VPS", ["Industry News"])
+    assert c.record_kind == "intel" and c.intel_category == "news"

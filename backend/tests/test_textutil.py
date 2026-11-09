@@ -60,8 +60,13 @@ def test_real_pipe_post_from_fixture():
     ("https://nodeseek.com/post-1027323-3", "https://www.nodeseek.com/post-1027323-1"),
     ("https://old.reddit.com/r/VPS/comments/1abcde/some_title/", "https://www.reddit.com/r/VPS/comments/1abcde"),
     ("https://lowendtalk.com/discussion/comment/3139017/#Comment_3139017",
-     "https://lowendtalk.com/discussion/comment/3139017/"),
+     "https://lowendtalk.com/discussion/comment/3139017"),  # 评论永久链接（Telegram 转发的出处，D81）
+    ("https://www.lowendspirit.com/discussion/comment/223419/", "https://lowendspirit.com/discussion/comment/223419"),
     ("https://lowendbox.com/blog/cheap-vps-deals/", "https://lowendbox.com/blog/cheap-vps-deals/"),
+    ("https://v2ex.com/t/1255439#reply2", "https://www.v2ex.com/t/1255439"),  # D88：锚点随回复数变
+    ("https://www.nodeloc.com/t/some-slug/117013/5", "https://www.nodeloc.com/t/topic/117013"),
+    ("https://www.hostingdiscussion.com/threads/cpanel-hosting-from-6-99-mo.90817/page-2",
+     "https://hostingdiscussion.com/threads/90817/"),
     ("https://Example.COM:443/a?b=1&utm_medium=x&fbclid=y&b=2", "https://example.com/a?b=1&b=2"),
     ("https://clients.hostsailor.com/r.php?ref=halloween26", "https://clients.hostsailor.com/r.php?ref=halloween26"),
 ])

@@ -72,7 +72,7 @@ def _links(row) -> list[Link]:
 
 
 def classify_row(row) -> Classification:
-    return classify(row["source"], row["title"], row["text_struct"], json.loads(row["categories_json"]))
+    return classify(row["source"], row["title"], row["text_struct"], json.loads(row["categories_json"]), row["author"])
 
 
 def merge_offer(conn: sqlite3.Connection, row, c: Classification, settings: Settings, now: str, *,
@@ -146,7 +146,7 @@ def _process_urls(conn: sqlite3.Connection, urls: Iterable[str], settings: Setti
         try:
             with transaction(conn):
                 row = conn.execute("SELECT * FROM raw_posts WHERE url = ?", (url,)).fetchone()
-                if index is None and row["source"] in ("nodeseek", "reddit", "lowendbox"):
+                if index is None and row["source"] not in ("telegram", "official"):  # 这两个源只出优惠
                     index = build_index(conn)
                 kind, saved, new_intel = process_post(conn, row, settings, now, index)
         except Exception as e:  # 单条出错不影响同一轮的其他帖子

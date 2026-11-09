@@ -61,7 +61,7 @@ def _plan(v: View, p: Plan, order_fallback: str | None) -> dict:
         "ram": v.size(p.ram_gb),
         "disk": " ".join(x for x in (v.size(p.disk_gb), str(p.disk_type or "")) if x),
         "bw": v.bandwidth(p), "port": v.speed(p.port_gbps), "loc": v.locations(p.locations),
-        "price": v.plan_price(p), "cny": v.plan_cny(p),
+        "price": v.plan_price(p), "term": v.plan_term(p), "cny": v.plan_cny(p),
         "code": p.coupon_code or None,  # 原样的码，页面加"码"字样与复制按钮（O-07）
         "order": _url(p.order_url) or order_fallback,
     }

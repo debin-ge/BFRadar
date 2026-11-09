@@ -7,6 +7,7 @@ import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
+from ..config import REDDIT_VENDOR_SUBREDDITS
 from ..models import EventType, IntelCategory, ProductType, RecordKind
 from . import keywords as kw
 
@@ -17,6 +18,28 @@ LEB_OFFER = {"special offers", "giveaways", "low end virtual", "low end dedicate
              "low end storage"}
 # NodeSeek 分类：promotion 为商家推广，photo-share 为贴图（排除）
 NS_RESALE, NS_CARPOOL, NS_REVIEW, NS_PROMOTION, NS_PHOTO = "trade", "carpool", "review", "promotion", "photo-share"
+# LET / LES 的优惠分类（全站讨论 feed 里混着其他分类，D82）；没有分类标签的按优惠处理（旧数据与测试）
+LET_OFFER_CATS = {"offers", "shared hosting offers", "giveaways & freebies"}
+LES_OFFER_CATS = {"offers", "vps", "dedicated servers", "shared hosting", "services and other", "free offers and stuff",
+                  "must see deals"}
+FORUM_NEWS = {"news", "industry news", "announcements"}
+# 小社区里综合性的推广 / 羊毛版块（D88）：大多是 AI 额度、代理 IP、eSIM、银行开户，通用产品词又宽（"鸡蛋"里的鸡、
+# "流量"），只收标题明确是主机的，或标题有黑五词、正文有产品词的（11-08 实测三个版块 100 条里 29 条按通用规则算情报，
+# 只有 4 条真与主机有关）
+GENERAL_DEAL_BOARDS = {"v2ex": {"promotions"}, "nodeloc": {"优惠情报", "羊毛党"}}
+HOSTING_TITLE = re.compile(r"vps|vds|kvm|lxc|独服|独立服务器|服务器|云主机|虚拟主机|主机|小鸡|鸡(?!蛋|翅|腿|汤)|dedicated|"
+                           r"bare.?metal|hosting|server|cn2|9929|4837|三网|回程|\d+\s?[hcHC核]\s?\d+\s?[gG]", re.I)
+FORUM_QUESTION = {"requests", "help", "provider tag requests"}
+# Telegram @VPS_spiders 给黑五期间的转发打 #黑五、#黑五2025 标签；模板正文往往不写 Black Friday（D81）
+TG_BF_TAG = re.compile(r"^(?:黑五|网一)")
+# Reddit 官方版块的品牌词（"SiteGroundOfficial" → siteground，"CloudwaysbyDO" → cloudways）：作者名里有它的是官方账号
+# （HostingerCOM、PoojafromCloudways、siteground），D83
+# 官方帖算优惠还要标题像促销（"Up to 82% off"、"Our Black Friday offer is live"）：官方账号也发周报、案例、安全通告，
+# 正文里常顺带一个码，不能只看正文（11-07 实测 8 条官方帖里 4 条是这类）
+OFFICIAL_PROMO_TITLE = re.compile(r"\d+\s?%\s?off|\b(?:offers?|deals?|discounts?|coupons?|promo(?:tion)?s?|sale)\b", re.I)
+VENDOR_SUB_BRANDS = {
+    sub.lower(): re.sub(r"official$|bydo$|vps$|[_\W]", "", sub.lower()) for sub in REDDIT_VENDOR_SUBREDDITS
+}
 
 
 @dataclass
@@ -30,10 +53,11 @@ class Classification:
     evidence: dict = field(default_factory=dict)  # 判定依据，便于排查
 
 
-def classify(source: str, title: str, text: str, categories: Sequence[str] = ()) -> Classification:
+def classify(source: str, title: str, text: str, categories: Sequence[str] = (),
+             author: str | None = None) -> Classification:
     cats = {c.strip().lower() for c in categories}
     lang = detect_lang(title, text)
-    kind = record_kind(source, title, text, cats)
+    kind = record_kind(source, title, text, cats, author)
     evidence: dict = {}
     products: list[ProductType] = []
     if kind is RecordKind.OFFER:
@@ -45,8 +69,12 @@ def classify(source: str, title: str, text: str, categories: Sequence[str] = ())
             kind, products = RecordKind.IGNORE, []
             evidence["scope"] = "出售硬件，不是租用"
     if kind is RecordKind.OFFER:
+        tagged = source == "telegram" and any(TG_BF_TAG.match(c) for c in cats)
         bf = black_friday_offer(title, text, evidence)
-        event = event_type(title, text, bf, evidence)
+        if tagged and not bf:
+            evidence["black_friday"] = "频道标签"
+        bf = bf or tagged
+        event = event_type(title, text, bf, evidence, tagged=tagged)
         intel_cat = None
     else:
         # 情报只看标题是否含黑五词（金标集规范 5.2），活动类型一律 other
@@ -61,9 +89,14 @@ def classify(source: str, title: str, text: str, categories: Sequence[str] = ())
 # ---------------------------------------------------------------- 记录类型
 
 
-def record_kind(source: str, title: str, text: str, cats: set[str]) -> RecordKind:
-    if source in ("lowendtalk", "lowendspirit"):  # Offers 分类全部为厂商促销
+def record_kind(source: str, title: str, text: str, cats: set[str], author: str | None = None) -> RecordKind:
+    if source in ("telegram", "official"):  # 转发的商家评论、品牌官网活动页全部为厂商促销
         return RecordKind.OFFER
+    if source in ("lowendtalk", "lowendspirit"):  # Offers 各分类全部为厂商促销，其他分类与 Reddit 一样只有情报与无关
+        offer_cats = LET_OFFER_CATS if source == "lowendtalk" else LES_OFFER_CATS
+        if not cats or cats & offer_cats:
+            return RecordKind.OFFER
+        return RecordKind.INTEL if kw.PRODUCT.search(f"{title}\n{text}") else RecordKind.IGNORE
     if source == "lowendbox":
         if cats & LEB_NEWS:
             return RecordKind.INTEL
@@ -80,8 +113,20 @@ def record_kind(source: str, title: str, text: str, cats: set[str]) -> RecordKin
             return RecordKind.INTEL
         if cats & {NS_RESALE, NS_CARPOOL}:
             return RecordKind.INTEL if kw.PRODUCT.search(blob) else RecordKind.IGNORE
-    # NodeSeek 其他分类与 Reddit：只有情报与无关两种
+    if (source == "reddit" and official_reddit_post(cats, author) and OFFICIAL_PROMO_TITLE.search(title)
+            and (kw.DISCOUNT.search(blob) or _has_offer_signal(blob))):
+        return RecordKind.OFFER  # 品牌官方账号在自家版块发的促销（D83）
+    if cats & GENERAL_DEAL_BOARDS.get(source, set()):
+        hosting = HOSTING_TITLE.search(title) or (_bf_hits(title) and kw.PRODUCT.search(blob))
+        return RecordKind.INTEL if hosting else RecordKind.IGNORE
+    # NodeSeek 其他分类、Reddit 与 V2EX、NodeLoc、HostingDiscussion（D88）：只有情报与无关两种
     return RecordKind.INTEL if kw.PRODUCT.search(blob) else RecordKind.IGNORE
+
+
+def official_reddit_post(cats: set[str], author: str | None) -> bool:
+    """帖子在品牌官方版块，且作者名含该品牌词（至少 5 个字母，免得短词误认）。"""
+    who = re.sub(r"[_\W]", "", (author or "").lower())
+    return any(len(brand := VENDOR_SUB_BRANDS.get(c, "")) >= 5 and brand in who for c in cats)
 
 
 def _has_offer_signal(blob: str) -> bool:
@@ -92,6 +137,13 @@ def _has_offer_signal(blob: str) -> bool:
 def intel_category(source: str, title: str, cats: set[str]) -> IntelCategory:
     if source == "lowendbox":
         return IntelCategory.NEWS
+    if source in ("lowendtalk", "lowendspirit", "hostingdiscussion"):  # 论坛分类直接说明了帖子性质
+        if cats & FORUM_NEWS:
+            return IntelCategory.NEWS
+        if cats & FORUM_QUESTION:
+            return IntelCategory.QUESTION
+        if "reviews" in cats:
+            return IntelCategory.REVIEW
     if NS_RESALE in cats or re.match(r"^\s*[\[【(（]?\s*(?:出|收|转)", title):
         return IntelCategory.RESALE
     if NS_CARPOOL in cats or re.search(r"拼车|合租|车找人|人找车|上车", title):
@@ -159,8 +211,8 @@ def black_friday_offer(title: str, text: str, evidence: dict) -> bool:
 # ---------------------------------------------------------------- 活动类型
 
 
-def event_type(title: str, text: str, is_bf: bool, evidence: dict) -> EventType:
-    """按金标集规范 5.3 的优先级取一个主类型。"""
+def event_type(title: str, text: str, is_bf: bool, evidence: dict, *, tagged: bool = False) -> EventType:
+    """按金标集规范 5.3 的优先级取一个主类型。tagged：来源标签已标明黑五（Telegram 转发），正文只写了网一才算网一。"""
     lead = f"{title}\n{text[:LEAD_CHARS]}"
     has_offer = bool(kw.PRICE.search(text) or kw.DISCOUNT.search(f"{title}\n{text}"))
     has_giveaway = bool(kw.GIVEAWAY.search(f"{title}\n{text}"))
@@ -168,7 +220,10 @@ def event_type(title: str, text: str, is_bf: bool, evidence: dict) -> EventType:
         if not (has_offer or has_giveaway):  # 只有预告、没有价格与折扣
             evidence["event"] = "黑五预告帖"
             return EventType.OTHER
-        bf_proper = kw.BLACK_FRIDAY.search(f"{title}\n{text}") or kw.BF_SHORT.search(f"{title}\n{text}")
+        blob = f"{title}\n{text}"
+        bf_proper = kw.BLACK_FRIDAY.search(blob) or kw.BF_SHORT.search(blob)
+        if tagged and not bf_proper and not kw.CYBER_MONDAY.search(blob):
+            bf_proper = True
         return EventType.BLACK_FRIDAY if bf_proper else EventType.CYBER_MONDAY
     for pattern, event in ((kw.HOLIDAY, EventType.HOLIDAY), (kw.ANNIVERSARY, EventType.ANNIVERSARY),
                            (kw.RESTOCK, EventType.RESTOCK), (kw.LAUNCH, EventType.LAUNCH)):

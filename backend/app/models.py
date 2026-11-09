@@ -159,6 +159,8 @@ class Plan:
     order_url: str | None = None
     coupon_code: str | None = None
     notes: str | None = None
+    term_months: int | None = None  # 一次付清的合约月数（D85）
+    renewal_price: float | None = None  # 续费价，与 price 同币种、同周期（D85）
     position: int = 0
     price_cny_year: float | None = None
     confidence: float | None = None

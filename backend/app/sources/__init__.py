@@ -5,7 +5,9 @@ from collections.abc import Iterable
 from ..config import Settings
 from ..http import HttpClient
 from .base import REGISTRY, FetchResult, Source, register
-from . import lowendbox, lowendspirit, lowendtalk, nodeseek, reddit  # noqa: F401  导入即注册
+from . import (  # noqa: F401  导入即注册
+    hostingdiscussion, lowendbox, lowendspirit, lowendtalk, nodeloc, nodeseek, official, reddit, telegram, v2ex,
+)
 
 
 def build_sources(settings: Settings, http: HttpClient, only: Iterable[str] | None = None,

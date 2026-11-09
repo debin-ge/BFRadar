@@ -1,8 +1,9 @@
 from app.db import Database
 from app.pipeline import crawl
 from app.sources import build_sources
+from app.sources.lowendtalk import FEED_URLS as LET_FEEDS
 
-from conftest import ROUTES, noop_sleep
+from conftest import EXTRA_ROUTES, ROUTES, noop_sleep
 
 
 def run(db, settings, http, only=None):
@@ -20,7 +21,7 @@ def test_crawl_all_sources_from_fixtures(tmp_path, settings, http):
     conn = db.conn()
     assert conn.execute("SELECT COUNT(*) FROM raw_posts").fetchone()[0] == sum(len(r.new) for r in by_source.values())
     rows = conn.execute("SELECT source, error, new_items FROM run_sources WHERE run_id = ?", (run_id,)).fetchall()
-    assert len(rows) == 5 and all(r["error"] is None for r in rows)
+    assert len(rows) == 10 and all(r["error"] is None for r in rows)
     assert conn.execute("SELECT ok FROM runs WHERE id = ?", (run_id,)).fetchone()[0] == 1
 
 
@@ -35,7 +36,8 @@ def test_second_round_finds_nothing_new_and_carries_nodeseek_state(tmp_path, set
 
 
 def test_one_failing_source_does_not_stop_others(tmp_path, settings, http, server):
-    server.overrides["https://lowendtalk.com/categories/offers/feed.rss"] = 503
+    for url in LET_FEEDS:  # 两页都失败才算该源失败
+        server.overrides[url] = 503
     db = Database(tmp_path / "radar.db")
     db.migrate()
     run_id, reports = run(db, settings, http, ["lowendtalk", "nodeseek"])
@@ -47,7 +49,7 @@ def test_one_failing_source_does_not_stop_others(tmp_path, settings, http, serve
     err = conn.execute("SELECT error FROM run_sources WHERE source = 'lowendtalk'").fetchone()[0]
     assert "503" in err
     assert server.requests.count("https://lowendtalk.com/categories/offers/feed.rss") == 3  # 退避重试 2 次
-    assert set(ROUTES) >= set(server.requests)
+    assert set(ROUTES) | set(EXTRA_ROUTES) >= set(server.requests)
 
 
 def test_crawl_classifies_new_posts(tmp_path, settings, http):

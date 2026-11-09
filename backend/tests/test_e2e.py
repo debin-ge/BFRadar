@@ -1,4 +1,4 @@
-"""后端端到端（M2.13）：main.py serve 起真的 uvicorn → 调度器启动后自动采集六个源 → LLM 队列跑完；接口、RSS、
+"""后端端到端（M2.13）：main.py serve 起真的 uvicorn → 调度器启动后自动采集各源 → LLM 队列跑完；接口、RSS、
 状态页数据、健康检查与手动刷新按 M2 验收清单（《实施计划》第 4 节）逐项检查。页面由前端渲染（D60）：
 沿链接走遍全站、首页要素、搜索、详情页、商家页、状态页与关于页在 test_e2e_web.py 里查；现场（真实 HTTP、快照与假 LLM）见 live.py。
 """
@@ -27,15 +27,16 @@ def test_serve_wiring(live):
     assert live.serve_kwargs == {"host": "0.0.0.0", "port": 8000, "workers": 1, "log_config": None,
                                  "proxy_headers": True, "forwarded_allow_ips": "*"}
     hosts = {urlsplit(u).hostname for u in live.upstream.requests}
-    assert {"lowendtalk.com", "lowendspirit.com", "lowendbox.com", "rss.nodeseek.com", "www.reddit.com",
-            "api.frankfurter.dev"} <= hosts  # 五个源与汇率都由调度器自己拉取
+    assert {"lowendtalk.com", "lowendspirit.com", "lowendbox.com", "rss.nodeseek.com", "www.reddit.com", "t.me",
+            "www.v2ex.com", "www.nodeloc.com", "hostingdiscussion.com",
+            "api.frankfurter.dev"} <= hosts  # 各源与汇率都由调度器自己拉取
 
 
 def test_startup_crawl_and_llm(live):
     stats = live.json("/api/stats")
     deals = stats["deals"]
     assert deals["total"] > 200
-    assert {"lowendtalk", "lowendspirit", "lowendbox"} <= set(deals["by_source"]) <= set(SOURCES)  # Reddit 只出情报
+    assert {"lowendtalk", "lowendspirit", "lowendbox"} <= set(deals["by_source"]) <= set(SOURCES)  # 夹具里没有品牌官方帖，Reddit 只出情报
     assert stats["llm"] == {"done": deals["total"]} and live.llm.calls == deals["total"]  # 每条优惠调用一次
     assert stats["fx"]["provider"] == "ecb" and stats["fx"]["date"] == "2026-11-02"
     assert stats["plans"] > 1000 and stats["intel"]["total"] > 0

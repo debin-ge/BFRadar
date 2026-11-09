@@ -19,7 +19,7 @@ export async function loader({ request, url, params }: Route.LoaderArgs) {
 
 export const meta: Route.MetaFunction = ({ loaderData }) => seoMeta(loaderData?.seo);
 
-/** 优惠详情（FR-10）："结论先行"——标题卡里先给摘要和两个去处，再是字段卡片、全部套餐，侧栏放时间线与相关内容。 */
+/** 优惠详情（FR-10）：标题卡先给摘要和商家下单入口，再是字段卡片、全部套餐，侧栏放时间线与相关内容。 */
 export default function DealDetail({ loaderData: d }: Route.ComponentProps) {
   const t = useT();
   const f = d.facts;
@@ -41,22 +41,15 @@ export default function DealDetail({ loaderData: d }: Route.ComponentProps) {
               <span className="note">{t("deal.auto_summary")}</span>
             </p>
           )}
-          <p className="actions">
-            {d.url && (
-              <Button asChild size="lg">
-                <a href={d.url} rel="nofollow noopener" target="_blank">
-                  {t("deal.original")}
-                </a>
-              </Button>
-            )}
-            {d.purchase_url && (
+          {d.purchase_url && (
+            <p className="actions">
               <Button asChild size="lg" variant="outline" className="bg-card">
                 <a href={d.purchase_url} rel="nofollow noopener" target="_blank">
                   {t("deal.buy")}
                 </a>
               </Button>
-            )}
-          </p>
+            </p>
+          )}
         </div>
         <dl className="hero-price">
           <dt>{t("deal.start")}</dt>
@@ -135,13 +128,6 @@ export default function DealDetail({ loaderData: d }: Route.ComponentProps) {
               <blockquote className="excerpt">
                 <p>{d.excerpt}</p>
               </blockquote>
-              {d.url && (
-                <p className="more-link">
-                  <a href={d.url} rel="nofollow noopener" target="_blank">
-                    {t("row.original")}
-                  </a>
-                </p>
-              )}
             </section>
           )}
         </div>

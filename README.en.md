@@ -4,7 +4,7 @@ English · [中文](README.md)
 
 Black Friday / Cyber Monday VPS and hosting deals are scattered across forums and communities. BFRadar collects them from public RSS feeds, extracts **plan-level** fields from each post, and serves a filterable, comparable list in Chinese and English. MIT licensed.
 
-Per deal it extracts: plan specs (CPU, RAM, disk, bandwidth, port speed, locations, network tags), prices in the original currency plus a CNY estimate, coupon codes, discount type (first term / recurring / lifetime) and end date. It covers four product types only — VPS, dedicated servers, web hosting and storage — and does not track stock. Every deal links back to the original post, and the site shows at most a 300-character excerpt.
+Per deal it extracts: plan specs (CPU, RAM, disk, bandwidth, port speed, locations, network tags), prices in the original currency plus a CNY estimate, coupon codes, discount type (first term / recurring / lifetime) and end date. It covers four product types only — VPS, dedicated servers, web hosting and storage — and does not track stock. User pages retain provider purchase links and show at most a 300-character excerpt, without original-post links or source labels.
 
 ## How it works
 
@@ -73,7 +73,7 @@ The crawler is written to these rules; keep them if you run your own instance, a
 - **Credit the original post.** Records from relay channels (Telegram) use the LET / LES comment they cite as their source link and dedup key; affiliate parameters (`aff=` and the like) and `utm_` parameters are stripped from relayed links.
 - **Identify yourself.** User-Agent is `Mozilla/5.0 (compatible; BFRadar/0.1; +SITE_URL; CONTACT_EMAIL)`; fill in your own.
 - **Low frequency.** Default intervals are in `backend/.env.example`; `Retry-After` is honoured on 429 / 5xx.
-- **Excerpts, not republication.** Pages and API expose structured fields, LLM-written summaries and ≤ 300-character excerpts, each linking to the original post; community threads are kept as titles and links only. Full text stays in the local database for extraction and is never served, and authors' usernames are not shown.
+- **Excerpts, not republication.** Pages and API expose structured fields, LLM-written summaries and ≤ 300-character excerpts. User pages omit original-post links and show community threads as titles and times. The public API, RSS and maintenance status page retain source information, and content text is not additionally filtered. Full text stays in the local database for extraction and is never served, and authors' usernames are not shown.
 - **Post content belongs to its authors and sites.** The MIT license covers this repository's code and docs only, not any collected content.
 
 Each source site has its own terms and `robots.txt`, and both change. Check them one by one before you deploy and decide for yourself whether your use is allowed. Usernames and contact details in posts may be personal data — don't publish or repurpose them — and honour takedown requests promptly.

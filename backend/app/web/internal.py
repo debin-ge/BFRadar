@@ -120,8 +120,8 @@ def _tag(v: View, a: Activity) -> dict:
 
 
 def _intel(v: View, rows) -> list[dict]:
-    """社区讨论：标题、原帖与相对时间（不写来源名，D59）。"""
-    return [{"title": v.pick_title(r["title"], r["title_zh"], r["title_en"]), "url": _url(r["url"]),
+    """社区讨论：只给标题与相对时间，不下发原帖地址。"""
+    return [{"title": v.pick_title(r["title"], r["title_zh"], r["title_en"]),
              "ago": v.ago(r["published_at"])} for r in rows]  # 标题按页面语言取译名（O-14），没有译名用原标题
 
 
@@ -329,7 +329,7 @@ def _deal(request: Request, view: View, deal_id: int) -> JSONResponse:
         "bf": d.is_black_friday, "event": t(f"event.{d.event_type}"),
         "title": title, "summary": summary,
         "original_title": t("deal.original_title") + sep("colon") + d.title if title != d.title else None,
-        "url": _url(d.url), "purchase_url": _url(d.purchase_url),
+        "purchase_url": _url(d.purchase_url),
         "facts": {
             "price": list(price) if price else None,
             "products": view.join(t(f"product.{x}") for x in d.product_types),

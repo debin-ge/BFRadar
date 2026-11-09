@@ -92,7 +92,7 @@ export function PlanTable({ plans, cols, t }: { plans: PlanRow[]; cols: PlanCol[
   );
 }
 
-/** 优惠卡片：像货架上的价签——起价是视觉中心，其余信息是小字。标题与"详情"都先进本站详情页，原帖链接在详情页里。 */
+/** 优惠卡片：起价是视觉中心，其余信息是小字。标题与"详情"都进入本站详情页。 */
 export function DealCard({ d, t }: { d: Deal; t: T }) {
   return (
     <li className={d.expiry?.state === "ended" ? "deal is-ended" : "deal"} id={`d${d.id}`}>

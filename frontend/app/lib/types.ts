@@ -116,7 +116,7 @@ export type Pager = {
   /** 页码；null 是中间省略的地方 */
   pages: ({ n: number; href: string; current: boolean } | null)[];
 } | null;
-export type IntelItem = { title: string; url: string | null; ago: string };
+export type IntelItem = { title: string; ago: string };
 export type VendorLink = { vendor: string; vendor_href: string | null; heat: string | null; heat_title: string | null };
 
 export type PlansPage = {
@@ -162,7 +162,6 @@ export type DealPage = VendorLink & {
   title: string;
   original_title: string | null;
   summary: string | null;
-  url: string | null;
   purchase_url: string | null;
   facts: {
     expiry: Expiry | null;

@@ -326,7 +326,7 @@ def test_deal_data(site):
     _, conn, client = site
     vm6 = deal_id(conn, VM6)
     d = client.get(f"/internal/v1/zh/deal/{vm6}").json()
-    assert d["seo"]["title"].startswith("BLACK FRIDAY | UK VPS") and d["url"] == VM6
+    assert d["seo"]["title"].startswith("BLACK FRIDAY | UK VPS") and "url" not in d
     assert d["purchase_url"] == "https://www.vm6.co.uk/promotions"
     assert (d["vendor"], d["vendor_href"]) == ("VM6", "/vendor/vm6")
     assert len(d["plans"]) == 9 and all(p["order"] for p in d["plans"])  # 详情页列全部套餐，每个都能去下单

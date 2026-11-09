@@ -48,19 +48,13 @@ export function Pager({ pager, t }: { pager: PagerData; t: T }) {
   );
 }
 
-/** 社区讨论：标题链到原帖，下一行是多久以前（不写来源名，D59）。 */
+/** 社区讨论：只展示标题与相对时间，不提供出处和外链。 */
 export function IntelList({ items }: { items: IntelItem[] }) {
   return (
     <ul className="intel">
       {items.map((x, i) => (
         <li key={i}>
-          {x.url ? (
-            <a href={x.url} rel="nofollow noopener" target="_blank">
-              {x.title}
-            </a>
-          ) : (
-            x.title
-          )}
+          {x.title}
           <span>{x.ago}</span>
         </li>
       ))}

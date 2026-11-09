@@ -1541,13 +1541,6 @@
   .intel li:first-child {
     border-top: 0;
   }
-  .intel a {
-    text-decoration: none;
-  }
-  .intel a:hover {
-    color: var(--signal);
-    text-decoration: underline;
-  }
   .intel span {
     order: -1;
     margin-bottom: 2px;

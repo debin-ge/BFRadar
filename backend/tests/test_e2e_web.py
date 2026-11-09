@@ -155,7 +155,7 @@ def test_assets_and_archive_of_old_builds(web):
 
 
 def test_pages_match_the_api(live, web):
-    """验收 3–7：首页按商家名与优惠码搜得到；套餐筛选的总数与接口一致；详情页带 LLM 的中文标题与摘要、原帖链接、
+    """验收 3–7：首页按商家名与优惠码搜得到；套餐筛选的总数与接口一致；详情页带 LLM 的中文标题与摘要、不链原帖、
     结构化数据与分享图；商家页列出这条优惠。"""
     item = next(d for d in live.json("/api/deals?scope=all&q=VM6")["items"] if d["url"] == VM6)
     for q in ("VM6", "bfvps55"):
@@ -163,12 +163,12 @@ def test_pages_match_the_api(live, web):
     total = live.json("/api/plans?ram_min=2&period=year")["total"]
     assert f"共 {total} 个套餐" in web.get("/plans?ram_min=2&period=year").text
     home = lxml.html.fromstring(web.get("/?scope=all&q=VM6").content)
-    # 卡片标题先进本站详情页（原帖链接在详情页里），不直接跳到原帖
+    # 卡片标题进入本站详情页，不提供原帖跳转
     assert home.xpath("//li[@id=$id]//h3/a/@href", id=f"d{item['id']}") == [f"/deal/{item['id']}"]
     assert not home.xpath("//li[@id=$id]//a[@target='_blank' and not(ancestor::table)]", id=f"d{item['id']}")
     page = lxml.html.fromstring(web.get(f"/deal/{item['id']}").content)
     assert page.findtext(".//h1").startswith("【译】") and SUMMARY in page.text_content()
-    assert page.xpath("//a[@href=$url]", url=item["url"])
+    assert not page.xpath("//a[@href=$url]", url=item["url"])
     assert [json.loads(x.text)["@type"] for x in page.xpath("//script[@type='application/ld+json']")] == [
         "Product", "BreadcrumbList"]
     assert page.xpath("//meta[@property='og:image']/@content")[0].startswith(f"{SITE}/og/zh/deal/{item['id']}.png?v=")
